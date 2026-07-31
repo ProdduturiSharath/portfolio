@@ -1,0 +1,79 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg-dark: #0b0f19;
+    --card-dark: #111827;
+    --elevated-dark: #1f2937;
+    --border-slate: #1e293b;
+    --border-slate-light: #374151;
+  }
+
+  body {
+    background-color: #0b0f19;
+    color: #f8fafc;
+    font-family: 'Inter', 'Roboto', system-ui, -apple-system, sans-serif;
+    overflow-x: hidden;
+  }
+
+  code, pre {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  }
+}
+
+/* Custom Scrollbar - Clean Dark Enterprise Style */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0b0f19;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1e293b;
+  border-radius: 4px;
+  border: 1px solid #374151;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #374151;
+}
+
+/* Enterprise Dark Utility Classes */
+.enterprise-card {
+  background-color: #111827;
+  border: 1px solid #1e293b;
+  border-radius: 0.75rem;
+  transition: border-color 0.2s ease-in-out, transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.enterprise-card:hover {
+  border-color: #374151;
+}
+
+.enterprise-input {
+  background-color: #111827;
+  border: 1px solid #1e293b;
+  color: #f8fafc;
+  border-radius: 0.5rem;
+  transition: border-color 0.15s ease-in-out, background-color 0.15s ease-in-out;
+}
+
+.enterprise-input:focus {
+  outline: none;
+  border-color: #38bdf8;
+  background-color: #1f2937;
+}
+
+/* Terminal Cursor animation */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.animate-cursor-blink {
+  animation: blink 1s step-end infinite;
+}
