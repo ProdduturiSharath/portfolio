@@ -14,11 +14,9 @@ export default function Navbar({ activeSection }) {
   }, []);
 
   const navLinks = [
-    { name: 'Overview', href: '#hero', icon: Code },
     { name: 'Skills', href: '#skills', icon: Cpu },
     { name: 'Experience', href: '#experience', icon: Briefcase },
-    { name: 'Projects', href: '#projects', icon: Terminal },
-    { name: 'Contact', href: '#contact', icon: Mail },
+    { name: 'Projects', href: '#projects', icon: Terminal }
   ];
 
   const scrollToSection = (e, href) => {
@@ -60,15 +58,6 @@ export default function Navbar({ activeSection }) {
             </span>
           </a>
 
-          {/* System Online Status Pill */}
-          <div className="hidden md:flex items-center space-x-2 px-3 py-1 rounded-md bg-[#111827] border border-[#1e293b] text-xs font-mono text-emerald-400">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-            </span>
-            <span>System Online</span>
-          </div>
-
           {/* Desktop Nav Links */}
           <nav className="hidden lg:flex items-center space-x-1 bg-[#111827] border border-[#1e293b] px-3 py-1.5 rounded-lg">
             {navLinks.map((link) => {
@@ -95,6 +84,14 @@ export default function Navbar({ activeSection }) {
           {/* Right Action */}
           <div className="hidden md:flex items-center space-x-3">
             <a
+              href={`${import.meta.env.BASE_URL}Sharath_Chandra_AI_Engineer_Resume.pdf`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-4 py-2 text-xs font-bold rounded-lg border border-[#374151] hover:border-sky-400 text-slate-300 hover:text-sky-400 bg-[#111827] transition-colors flex items-center space-x-1.5 shadow-sm"
+            >
+              <span>Resume</span>
+            </a>
+            <a
               href="#contact"
               onClick={(e) => scrollToSection(e, '#contact')}
               className="px-4 py-2 text-xs font-bold rounded-lg bg-sky-400 hover:bg-sky-500 text-[#0b0f19] transition-colors flex items-center space-x-1.5 shadow-sm"
@@ -106,13 +103,6 @@ export default function Navbar({ activeSection }) {
 
           {/* Mobile Menu Toggle Button */}
           <div className="lg:hidden flex items-center space-x-2">
-            <div className="flex items-center space-x-1.5 px-2.5 py-1 rounded-md bg-[#111827] border border-[#1e293b] text-[10px] font-mono text-emerald-400">
-              <span className="relative flex h-1.5 w-1.5">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500"></span>
-              </span>
-              <span>Online</span>
-            </div>
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="p-2 rounded-lg bg-[#111827] border border-[#1e293b] text-slate-300 hover:text-white focus:outline-none"
@@ -147,6 +137,14 @@ export default function Navbar({ activeSection }) {
                 </a>
               );
             })}
+            <a
+              href={`${import.meta.env.BASE_URL}Sharath_Chandra_AI_Engineer_Resume.pdf`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center space-x-2 py-3 rounded-lg border border-[#374151] text-slate-300 hover:text-sky-400 font-bold text-xs shadow-sm mt-2"
+            >
+              <span>View Resume</span>
+            </a>
             <a
               href="#contact"
               onClick={(e) => scrollToSection(e, '#contact')}

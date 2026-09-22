@@ -1,107 +1,200 @@
 /**
- * API service for SDE Portfolio.
- * Connects to backend endpoints with fallback to local static dataset.
+ * API service for AI Engineer Portfolio.
+ * Provides local static dataset and Formspree contact submission.
  */
 
-// Primary dataset matching portfolio structure
+// Primary dataset matching AI Engineer portfolio structure
 const PORTFOLIO_DATA = {
   personalInfo: {
     name: "Prodduturi Sharath Chandra",
-    title: "Software Development Engineer (Backend / Full-Stack)",
+    title: "AI Engineer | Generative AI | LLM & Multi-Agent Systems | RAG Pipelines",
     phone: "+91 9642730647",
     email: "sharathchandraprodduturi@gmail.com",
-    linkedin: "https://linkedin.com/in/sharathchandraprodduturi",
-    github: "https://github.com/sharathchandraprodduturi",
+    linkedin: "https://linkedin.com/in/prodduturisharath",
+    github: "https://github.com/ProdduturiSharath",
+    portfolio: "https://prodduturisharath.github.io/portfolio/",
     location: "Bangalore, India"
   },
-  summary: "Backend-leaning full-stack engineer who turns tangled business logic into systems that hold up under load — a distributed API gateway with a Redis-backed rate limiter, a DAG-driven task engine that parallelizes work with asyncio, an enterprise reservation portal now running in production. Comfortable owning a feature end to end: Java and Spring Boot on the backend, React.js on the front end, REST and GraphQL wiring it together. Most energized by problems where correctness, latency, and clean architecture all have to work at once.",
+  summary: "AI Engineer with experience in architecting and deploying Generative AI ecosystems, specializing in multi-agent orchestration, advanced RAG pipelines, and instruction fine-tuning for Small Language Models (SLMs). Proficient in building highly scalable, fault-tolerant AI backend infrastructure using Python, LangChain, FastAPI, and vector databases. Strong focus on bridging robust full-stack engineering with LLM capabilities to deliver low-latency enterprise applications.",
   technicalSkills: {
-    languages: ["Java", "JavaScript", "TypeScript", "Python", "SQL", "Groovy"],
-    backendAndFrameworks: ["Spring Boot", "Spring MVC", "Spring Data JPA", "Node.js", "Express.js", "FastAPI", "OOP & Design Patterns"],
-    frontend: ["React.js", "Redux", "Context API", "HTML5", "CSS3", "Vite", "Zustand"],
-    apisAndArchitecture: ["RESTful APIs", "GraphQL (Apollo)", "Microservices Architecture", "System Design", "Distributed Systems", "JSON/XML Data Exchange"],
-    databasesAndCaching: ["PostgreSQL", "MongoDB", "MySQL", "Redis"],
-    devOpsAndTools: ["Docker", "Docker Compose", "Git", "GitHub", "CI/CD Pipelines", "Postman", "ReadyAPI"],
-    practices: ["Agile/Scrum", "SDLC", "Data Structures & Algorithms", "Code Reviews", "Unit & Integration Testing", "Technical Documentation"]
+    generativeAi: [
+      "RAG Architecture",
+      "Multi-Agent Systems",
+      "LangChain",
+      "LlamaIndex",
+      "Prompt Engineering",
+      "Function/Tool Calling",
+      "Fine Tuning (QLoRA)",
+      "Gemini / Llama Integration"
+    ],
+    mlDataStorage: [
+      "PyTorch",
+      "HuggingFace",
+      "Pinecone (Vector DB)",
+      "Hybrid Search (Dense + Sparse, BM25)",
+      "PostgreSQL (Relational & JSONB)",
+      "MongoDB"
+    ],
+    languages: [
+      "Python",
+      "JavaScript / TypeScript",
+      "Java",
+      "SQL"
+    ],
+    backendAndInfrastructure: [
+      "FastAPI",
+      "Node.js",
+      "Express.js",
+      "React.js",
+      "GraphQL",
+      "Docker",
+      "vLLM",
+      "Unsloth",
+      "Git",
+      "Cursor",
+      "GitHub Copilot"
+    ]
   },
   professionalExperience: [
     {
-      id: "ltimindtree-se",
+      id: "ltimindtree-ai-se",
       company: "LTIMindtree",
       location: "Bangalore, India",
       period: "June 2025 – Present",
-      role: "Software Engineer (Backend / Full-Stack)",
+      role: "Software Engineer",
+      isCurrent: true,
+      techStack: [
+        "React",
+        "Node.js",
+        "Express",
+        "SQL",
+        "LLM Tool Calling",
+        "FastAPI",
+        "Cursor",
+        "GitHub Copilot"
+      ],
+      impactMetrics: [
+        { label: "Manual Provisioning Time", value: "-70%", detail: "Automated multi-step API transactions" },
+        { label: "Conversational Agent", value: "Real-time", detail: "Dynamic intent recognition & tool calling" },
+        { label: "Enterprise Platform", value: "Self-Service", detail: "Central hub for internal data orchestration" }
+      ],
       highlights: [
-        "Designed, developed, and deployed a full-stack enterprise portal (Java, React.js, Node.js, Express, SQL) to manage complex reservation and loyalty operations, replacing manual workflows for cross-functional teams.",
-        "Built and integrated a natural-language chatbot service, parsing user commands into RESTful API requests to automate data retrieval and task execution across the platform.",
-        "Engineered backend orchestration scripts in Groovy to handle multi-step business logic, including multi-channel authentication, dynamic rate querying, and secure payment tokenization.",
-        "Integrated enterprise-level GraphQL services (Apollo/UXL), constructing dynamic payloads to ensure robust, low-latency data exchange for booking workflows.",
-        "Designed programmatic interfaces to distributed enterprise systems (ACRS, MARSHA), enabling automated user profile creation and loyalty point allocation via REST endpoints.",
-        "Collaborated with cross-functional and Agile teams throughout the SDLC — from requirements analysis to release — to deliver scalable, production-ready features."
+        "Collaborated in developing full-stack enterprise Self-Service Portal (SSP) using React, Node.js, Express, and SQL, serving as the centralized hub for internal automation and enterprise data orchestration.",
+        "Integrated an LLM-driven conversational agent into the portal, implementing dynamic intent recognition and function/tool calling to parse natural-language user requests in real time.",
+        "Engineered the backend to translate parsed intents into strictly validated, structured JSON API payloads, integrating seamlessly with distributed enterprise systems.",
+        "Developed automated data pipelines to orchestrate complex, multi-step API transactions spanning authentication, dynamic rate querying, and secure tokenization, reducing manual data provisioning time by 70%.",
+        "Accelerated the platform development lifecycle by leveraging AI-assisted programming tools (Cursor, Copilot) for rapid full-stack development."
+      ]
+    },
+    {
+      id: "hcl-tech-intern",
+      company: "HCL Technologies",
+      location: "Chennai, India",
+      period: "Feb 2024 – May 2024",
+      role: "Software Engineering Intern",
+      isCurrent: false,
+      techStack: [
+        "Full-Stack Web Dev",
+        "RESTful APIs",
+        "Agile / Scrum"
+      ],
+      impactMetrics: [
+        { label: "Architecture", value: "RESTful", detail: "Scalable service architectures" },
+        { label: "Environment", value: "Agile", detail: "Sprint delivery and SDLC execution" },
+        { label: "Application Scope", value: "Full-Stack", detail: "Enterprise web application features" }
+      ],
+      highlights: [
+        "Contributed to the development of full-stack web applications & scalable RESTful architectures within an Agile environment."
       ]
     }
   ],
   projects: [
     {
-      id: "distributed-api-rate-limiter",
-      title: "Distributed API Rate Limiter and Gateway",
-      technologies: ["Java", "Spring Boot", "Redis", "Docker", "PostgreSQL"],
-      description: "Architected a distributed API Gateway in Java and Spring Boot to securely route traffic, manage payloads, and authenticate requests across multiple downstream microservices.",
+      id: "enterprise-multi-agent-platform",
+      title: "Enterprise Multi-Agent AI Orchestration Platform",
+      category: "Multi-Agent & LLM",
+      technologies: ["Python", "LangChain", "FastAPI", "React", "PostgreSQL", "Docker"],
+      description: "Engineered an asynchronous multi-agent orchestration engine that translates natural-language queries into parallelized DAGs, reducing overall task execution latency by 40%.",
       highlights: [
-        "Architected a distributed API Gateway in Java and Spring Boot to securely route traffic, manage payloads, and authenticate requests across multiple downstream microservices.",
-        "Engineered a low-latency Distributed Rate Limiter implementing the Token Bucket algorithm via Redis, preventing API abuse and ensuring high availability under simulated traffic spikes.",
-        "Designed a centralized logging and monitoring interceptor to track real-time API latency and error rates, storing transaction metrics in an optimized PostgreSQL schema."
+        "Engineered an asynchronous multi-agent orchestration engine that translates natural-language queries into parallelized DAGs, reducing overall task execution latency by 40%.",
+        "Designed an intelligent LLM routing dispatcher that enforces strict schema validation, guaranteeing deterministic, structured outputs and eliminating malformed API payloads.",
+        "Implemented a self-healing LLM invocation pipeline featuring cross-provider fallback routing and exponential backoff, achieving 100% system uptime against external API rate limits.",
+        "Parallelized sub-task execution using Python's asyncio, backed by a hybrid PostgreSQL state management system to persist complex, unpredictable LLM workflows."
+      ],
+      keyInnovations: [
+        "Dynamic DAG Query-to-Workflow Compiler reducing latency by 40%",
+        "Zero-Malformed Output Schema Validation Dispatcher",
+        "Cross-Provider Self-Healing Fallback Pipeline with Exponential Backoff"
       ],
       architectureDiagram: `
-┌─────────────────┐      ┌───────────────────────────┐      ┌─────────────────────────┐
-│ Client Request  │ ───► │  Spring Boot Gateway      │ ───► │ Redis Token Bucket      │
-└─────────────────┘      │  (JWT Auth & Routing)     │      │ (Rate Limit Check)      │
-                         └─────────────┬─────────────┘      └─────────────────────────┘
-                                       │
-                                       ▼
-                         ┌───────────────────────────┐
-                         │ PostgreSQL Logging        │
-                         │ (Latency & Metrics Audit) │
-                         └───────────────────────────┘
+┌──────────────────┐      ┌─────────────────────────────┐      ┌───────────────────────────┐
+│ User Query (NL)  │ ───► │ Intent Router & Dispatcher  │ ───► │ Parallelized DAG Engine   │
+│                  │      │ (Strict Schema Validation)  │      │ (Python Asyncio Workers)  │
+└──────────────────┘      └──────────────┬──────────────┘      └─────────────┬─────────────┘
+                                         │                                   │
+                                         ▼                                   ▼
+                          ┌─────────────────────────────┐      ┌───────────────────────────┐
+                          │ Self-Healing LLM Pipeline   │      │ Hybrid PostgreSQL DB      │
+                          │ (Cross-Provider Fallbacks)  │      │ (Workflow State History)  │
+                          └─────────────────────────────┘      └───────────────────────────┘
       `
     },
     {
-      id: "async-task-orchestration",
-      title: "Asynchronous Task Orchestration Engine",
-      technologies: ["Python", "FastAPI", "PostgreSQL", "React", "Docker"],
-      description: "Developed a scalable backend engine that dynamically schedules and processes interdependent tasks within a Directed Acyclic Graph (DAG) architecture.",
+      id: "slm-instruction-fine-tuning",
+      title: "SLM Instruction Fine-Tuning",
+      category: "Fine-Tuning & SLM",
+      technologies: ["Python", "PyTorch", "Unsloth", "QLoRA", "HuggingFace TRL", "vLLM"],
+      description: "Fine-tuned an open-weights Llama 3 (8B) model using Unsloth and QLoRA, optimizing the model to extract strictly typed JSON payloads from unstructured enterprise support tickets.",
       highlights: [
-        "Developed a scalable backend engine that dynamically schedules and processes interdependent tasks within a Directed Acyclic Graph (DAG) architecture.",
-        "Utilized Python's asyncio to evaluate and execute processes in parallel, reducing overall system latency versus synchronous processing.",
-        "Containerized the multi-tier application (frontend, backend, database) using Docker to ensure environment parity and seamless deployment."
+        "Fine-tuned an open-weights Llama 3 (8B) model using Unsloth and QLoRA, optimizing the model to extract strictly typed JSON payloads (issue severity, component, intent) from unstructured enterprise support tickets.",
+        "Curated a synthetic training dataset of 5,000+ support interactions and evaluated model performance based on JSON Schema Validation Pass Rate, achieving a 98% perfectly parsable output rate.",
+        "Implemented Parameter-Efficient Fine-Tuning (PEFT) to update <2% of total model parameters, drastically reducing VRAM requirements for training while preventing catastrophic forgetting."
+      ],
+      keyInnovations: [
+        "Unsloth 2x Faster QLoRA Parameter-Efficient Tuning (<2% parameters)",
+        "98% JSON Schema Validation Pass Rate on Enterprise Tickets",
+        "High-Throughput Low-Latency Serving with vLLM"
       ],
       architectureDiagram: `
-┌─────────────────┐      ┌───────────────────────────┐      ┌─────────────────────────┐
-│ DAG Workflows   │ ───► │ FastAPI Async Engine      │ ───► │ Python Asyncio Workers  │
-│ Definition JSON │      │ (Dependency Resolver)     │      │ (Parallel Task Exec)    │
-└─────────────────┘      └─────────────┬─────────────┘      └─────────────────────────┘
-                                       │
-                                       ▼
-                         ┌───────────────────────────┐
-                         │ PostgreSQL & Docker       │
-                         │ (State & Artifact Storage)│
-                         └───────────────────────────┘
+┌──────────────────┐      ┌─────────────────────────────┐      ┌───────────────────────────┐
+│ 5,000+ Tickets   │ ───► │ QLoRA & Unsloth Pipeline    │ ───► │ Fine-Tuned Llama 3 (8B)   │
+│ (Unstructured)   │      │ (PEFT <2% Total Parameters) │      │ (Strict JSON Extraction)  │
+└──────────────────┘      └──────────────┬──────────────┘      └─────────────┬─────────────┘
+                                         │                                   │
+                                         ▼                                   ▼
+                          ┌─────────────────────────────┐      ┌───────────────────────────┐
+                          │ Synthetic Evaluation Suite  │      │ High-Throughput vLLM      │
+                          │ (98% Schema Pass Rate)      │      │ (Low-Latency Serving)     │
+                          └─────────────────────────────┘      └───────────────────────────┘
       `
     },
     {
-      id: "real-estate-property-management",
-      title: "Real Estate Property Management Platform",
-      technologies: ["Node.js", "Express.js", "MongoDB", "React", "EJS"],
-      description: "Built a scalable property management web application using MVC architecture to deliver a responsive UI and secure RESTful APIs.",
+      id: "enterprise-rag-document-intelligence",
+      title: "Enterprise RAG Document Intelligence Pipeline",
+      category: "RAG & Vector Search",
+      technologies: ["Python", "LangChain", "FastAPI", "Pinecone", "Hybrid Search (BM25)"],
+      description: "Engineered a scalable Retrieval-Augmented Generation (RAG) pipeline to ingest, chunk, and embed large-scale proprietary text datasets into a Pinecone vector database for low-latency retrieval.",
       highlights: [
-        "Built a scalable property management web application using MVC architecture to deliver a responsive UI and secure RESTful APIs.",
-        "Enhanced backend security by implementing password hashing, role-based access control, and comprehensive payload validation."
+        "Engineered a scalable Retrieval-Augmented Generation (RAG) pipeline to ingest, chunk, and embed large-scale proprietary text datasets into a Pinecone vector database for low-latency retrieval.",
+        "Implemented a hybrid search architecture fusing dense vector embeddings with sparse keyword search (BM25), improving context retrieval accuracy by 35%.",
+        "Designed asynchronous FastAPI endpoints to orchestrate contextual querying via LangChain, dynamically injecting retrieved vector chunks to reduce model hallucinations by over 85%."
+      ],
+      keyInnovations: [
+        "Dense + Sparse Hybrid Search (Pinecone Vector DB + BM25)",
+        ">85% Hallucination Reduction via Dynamic Context Injection",
+        "Asynchronous FastAPI Ingestion and Retrieval Orchestration"
       ],
       architectureDiagram: `
-┌─────────────────┐      ┌───────────────────────────┐      ┌─────────────────────────┐
-│ React Frontend  │ ───► │ Express.js REST API       │ ───► │ MongoDB Database        │
-│ & EJS Templates │      │ (MVC & RBAC Controller)   │      │ (Property & User Docs)  │
-└─────────────────┘      └───────────────────────────┘      └─────────────────────────┘
+┌──────────────────┐      ┌─────────────────────────────┐      ┌───────────────────────────┐
+│ Enterprise Docs  │ ───► │ Chunking & Dense Embeddings │ ───► │ Pinecone Vector Database  │
+│ & Knowledge Base │      │ + Sparse Inverted Index     │      │ (Dense + BM25 Sparse)     │
+└──────────────────┘      └──────────────┬──────────────┘      └─────────────┬─────────────┘
+                                         │                                   │
+                                         ▼                                   ▼
+                          ┌─────────────────────────────┐      ┌───────────────────────────┐
+                          │ LangChain Async FastAPI     │ ───► │ Hallucination Guardrail   │
+                          │ (Contextual Prompt Inj.)    │      │ (>85% Hallucination Drop) │
+                          └─────────────────────────────┘      └───────────────────────────┘
       `
     }
   ],
@@ -112,7 +205,8 @@ const PORTFOLIO_DATA = {
       location: "Chennai, Tamil Nadu",
       period: "2021 – 2025",
       degree: "Bachelor of Engineering in Computer Science",
-      cgpa: "8.13"
+      cgpa: "8.13 / 10.0",
+      publication: "Diagnosis of Neurodegenerative Diseases Using Deep Learning Methods — Research Presented at ICRETM 2025"
     }
   ]
 };

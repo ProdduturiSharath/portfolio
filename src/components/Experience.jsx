@@ -2,38 +2,56 @@ import React, { useState } from 'react';
 import { Briefcase, Calendar, MapPin, ChevronDown, ChevronUp, CheckCircle2, Cpu, Sparkles } from 'lucide-react';
 
 export default function Experience({ experienceData }) {
-  const [expandedId, setExpandedId] = useState('ltimindtree-se');
+  const [expandedId, setExpandedId] = useState('ltimindtree-ai-se');
+
+  const defaultList = [
+    {
+      id: 'ltimindtree-ai-se',
+      company: 'LTIMindtree',
+      location: 'Bangalore, India',
+      period: 'June 2025 – Present',
+      role: 'Software Engineer',
+      isCurrent: true,
+      techStack: [
+        'React', 'Node.js', 'Express', 'SQL', 'LLM Tool Calling', 'FastAPI', 'Cursor', 'GitHub Copilot'
+      ],
+      impactMetrics: [
+        { label: 'Manual Provisioning Time', value: '-70%', detail: 'Automated multi-step API transactions' },
+        { label: 'Conversational Agent', value: 'Real-time', detail: 'Dynamic intent recognition & tool calling' },
+        { label: 'Enterprise Platform', value: 'Self-Service', detail: 'Central hub for internal data orchestration' }
+      ],
+      highlights: [
+        'Collaborated in developing full-stack enterprise Self-Service Portal (SSP) using React, Node.js, Express, and SQL, serving as the centralized hub for internal automation and enterprise data orchestration.',
+        'Integrated an LLM-driven conversational agent into the portal, implementing dynamic intent recognition and function/tool calling to parse natural-language user requests in real time.',
+        'Engineered the backend to translate parsed intents into strictly validated, structured JSON API payloads, integrating seamlessly with distributed enterprise systems.',
+        'Developed automated data pipelines to orchestrate complex, multi-step API transactions spanning authentication, dynamic rate querying, and secure tokenization, reducing manual data provisioning time by 70%.',
+        'Accelerated the platform development lifecycle by leveraging AI-assisted programming tools (Cursor, Copilot) for rapid full-stack development.'
+      ]
+    },
+    {
+      id: 'hcl-tech-intern',
+      company: 'HCL Technologies',
+      location: 'Chennai, India',
+      period: 'Feb 2024 – May 2024',
+      role: 'Software Engineering Intern',
+      isCurrent: false,
+      techStack: [
+        'Full-Stack Web Dev', 'RESTful APIs', 'Agile / Scrum'
+      ],
+      impactMetrics: [
+        { label: 'Architecture', value: 'RESTful', detail: 'Scalable service architectures' },
+        { label: 'Environment', value: 'Agile', detail: 'Sprint delivery and SDLC execution' },
+        { label: 'Application Scope', value: 'Full-Stack', detail: 'Enterprise web application features' }
+      ],
+      highlights: [
+        'Contributed to the development of full-stack web applications & scalable RESTful architectures within an Agile environment.'
+      ]
+    }
+  ];
 
   const list = (experienceData && experienceData.length > 0)
     ? experienceData
-    : [
-        {
-          id: 'ltimindtree-se',
-          company: 'LTIMindtree',
-          location: 'Bangalore, India',
-          period: 'June 2025 – Present',
-          role: 'Software Engineer (Backend / Full-Stack)',
-          highlights: [
-            'Designed, developed, and deployed a full-stack enterprise portal (Java, React.js, Node.js, Express, SQL) to manage complex reservation and loyalty operations, replacing manual workflows for cross-functional teams.',
-            'Built and integrated a natural-language chatbot service, parsing user commands into RESTful API requests to automate data retrieval and task execution across the platform.',
-            'Engineered backend orchestration scripts in Groovy to handle multi-step business logic, including multi-channel authentication, dynamic rate querying, and secure payment tokenization.',
-            'Integrated enterprise-level GraphQL services (Apollo/UXL), constructing dynamic payloads to ensure robust, low-latency data exchange for booking workflows.',
-            'Designed programmatic interfaces to distributed enterprise systems (ACRS, MARSHA), enabling automated user profile creation and loyalty point allocation via REST endpoints.',
-            'Collaborated with cross-functional and Agile teams throughout the SDLC — from requirements analysis to release — to deliver scalable, production-ready features.'
-          ]
-        }
-      ];
-
-  const techStack = [
-    'Java', 'Spring Boot', 'React.js', 'Node.js', 'Express', 'SQL',
-    'GraphQL (Apollo)', 'Groovy', 'ACRS & MARSHA APIs', 'REST APIs', 'Agile/SDLC'
-  ];
-
-  const impactMetrics = [
-    { label: 'Manual Workflow Reduction', value: '100%', detail: 'Replaced manual ops with enterprise portal' },
-    { label: 'Chatbot Automation', value: 'Natural Language', detail: 'Parses commands into REST API calls' },
-    { label: 'Enterprise Systems Integration', value: 'ACRS & MARSHA', detail: 'Automated profile & loyalty allocation' },
-  ];
+    : defaultList;
 
   const toggleExpand = (id) => {
     setExpandedId(expandedId === id ? null : id);
@@ -53,7 +71,7 @@ export default function Experience({ experienceData }) {
             Engineering <span className="text-sky-400">Experience</span>
           </h2>
           <p className="text-slate-400 text-sm sm:text-base">
-            Track record of shipping enterprise software, backend orchestrations, and full-stack solutions at scale.
+            Track record of shipping enterprise software, conversational AI agents, automated data pipelines, and full-stack solutions at scale.
           </p>
         </div>
 
@@ -65,12 +83,18 @@ export default function Experience({ experienceData }) {
 
           {list.map((exp) => {
             const isExpanded = expandedId === exp.id;
+            const cardMetrics = exp.impactMetrics || [
+              { label: 'Architecture', value: 'RESTful', detail: 'Production enterprise systems' }
+            ];
+            const cardStack = exp.techStack || ['Full-Stack', 'REST APIs', 'Agile'];
+            const isCurrentRole = Boolean(exp.isCurrent || (exp.period && exp.period.includes('Present')));
+
             return (
               <div key={exp.id} className="relative mb-12 last:mb-0">
 
                 {/* Timeline Dot */}
                 <div className="absolute left-4 sm:left-1/2 -translate-x-1/2 top-6 w-8 h-8 rounded-full bg-[#111827] border-2 border-sky-400 flex items-center justify-center z-10 shadow-sm hidden sm:flex">
-                  <div className="w-2.5 h-2.5 rounded-full bg-emerald-400"></div>
+                  <div className={`w-2.5 h-2.5 rounded-full ${isCurrentRole ? 'bg-emerald-400' : 'bg-sky-400'}`}></div>
                 </div>
 
                 {/* Card Container */}
@@ -79,10 +103,12 @@ export default function Experience({ experienceData }) {
                   {/* Card Header Info */}
                   <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[#1e293b] pb-5">
                     <div>
-                      <div className="flex items-center space-x-2 text-xs font-mono text-emerald-400 mb-1">
-                        <Sparkles className="w-3.5 h-3.5" />
-                        <span>Current Role</span>
-                      </div>
+                      {isCurrentRole && (
+                        <div className="flex items-center space-x-2 text-xs font-mono text-emerald-400 mb-1">
+                          <Sparkles className="w-3.5 h-3.5" />
+                          <span>Current Role</span>
+                        </div>
+                      )}
                       <h3 className="text-xl sm:text-2xl font-extrabold text-white tracking-tight">
                         {exp.role}
                       </h3>
@@ -113,8 +139,8 @@ export default function Experience({ experienceData }) {
                   </div>
 
                   {/* Impact Metrics Callouts Grid */}
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 my-6">
-                    {impactMetrics.map((metric, idx) => (
+                  <div className={`grid grid-cols-1 sm:grid-cols-${Math.min(cardMetrics.length, 3)} gap-3 my-6`}>
+                    {cardMetrics.map((metric, idx) => (
                       <div key={idx} className="p-3.5 rounded-lg bg-[#1f2937] border border-[#374151]">
                         <div className="text-xs text-slate-400 font-mono mb-1">{metric.label}</div>
                         <div className="text-lg font-bold text-sky-400 font-mono">{metric.value}</div>
@@ -146,7 +172,7 @@ export default function Experience({ experienceData }) {
                       <Cpu className="w-3.5 h-3.5 mr-1 text-sky-400" />
                       Stack:
                     </span>
-                    {techStack.map((tech) => (
+                    {cardStack.map((tech) => (
                       <span
                         key={tech}
                         className="px-2.5 py-1 rounded-md bg-[#1f2937] border border-[#374151] text-[11px] font-mono text-slate-300 hover:border-sky-400 hover:text-sky-400 transition-colors"

@@ -6,8 +6,8 @@ export default function ContactForm({ personalInfo }) {
   const info = personalInfo || {
     phone: "+91 9642730647",
     email: "sharathchandraprodduturi@gmail.com",
-    linkedin: "https://linkedin.com/in/sharathchandraprodduturi",
-    github: "https://github.com/sharathchandraprodduturi",
+    linkedin: "https://linkedin.com/in/prodduturisharath",
+    github: "https://github.com/ProdduturiSharath",
     location: "Bangalore, India"
   };
 
@@ -96,7 +96,7 @@ export default function ContactForm({ personalInfo }) {
             Let's Build <span className="text-sky-400">Something Great</span>
           </h2>
           <p className="text-slate-400 text-sm sm:text-base">
-            Whether you have a technical opportunity, a backend architectural question, or just want to connect — my inbox is always open.
+            Whether you have an AI/LLM engineering opportunity, an architectural question on multi-agent systems, or just want to connect — my inbox is always open.
           </p>
         </div>
 

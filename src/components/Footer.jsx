@@ -27,7 +27,7 @@ export default function Footer({ personalInfo }) {
           {/* Social Links */}
           <div className="flex items-center space-x-3">
             <a
-              href={personalInfo?.github || "https://github.com/sharathchandraprodduturi"}
+              href={personalInfo?.github || "https://github.com/ProdduturiSharath"}
               target="_blank"
               rel="noopener noreferrer"
               className="p-2.5 rounded-lg bg-[#111827] border border-[#1e293b] hover:border-[#374151] text-slate-300 hover:text-white transition-colors"
@@ -36,7 +36,7 @@ export default function Footer({ personalInfo }) {
               <Github className="w-4 h-4" />
             </a>
             <a
-              href={personalInfo?.linkedin || "https://linkedin.com/in/sharathchandraprodduturi"}
+              href={personalInfo?.linkedin || "https://linkedin.com/in/prodduturisharath"}
               target="_blank"
               rel="noopener noreferrer"
               className="p-2.5 rounded-lg bg-[#111827] border border-[#1e293b] hover:border-[#374151] text-slate-300 hover:text-sky-400 transition-colors"

@@ -1,9 +1,9 @@
 {
-  "name": "sde-portfolio-frontend",
+  "name": "ai-engineer-portfolio-frontend",
   "private": true,
   "version": "1.0.0",
   "type": "module",
-  "homepage": "https://SharathChandra09.github.io/PersonalPortfolioV2/",
+  "homepage": "https://prodduturisharath.github.io/portfolio/",
   "scripts": {
     "dev": "vite",
     "build": "vite build",

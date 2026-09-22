@@ -3,87 +3,95 @@ import { Terminal, CheckCircle2, FileText, ChevronDown, ChevronUp, Zap } from 'l
 
 export default function Projects({ projectsData }) {
   const [activeFilter, setActiveFilter] = useState('All');
-  const [openDiagramId, setOpenDiagramId] = useState('distributed-api-rate-limiter');
+  const [openDiagramId, setOpenDiagramId] = useState('enterprise-multi-agent-platform');
 
   const defaultProjects = [
     {
-      id: 'distributed-api-rate-limiter',
-      title: 'Distributed API Rate Limiter and Gateway',
-      category: 'Backend & Distributed',
-      technologies: ['Java', 'Spring Boot', 'Redis', 'Docker', 'PostgreSQL'],
-      description: 'Architected a distributed API Gateway in Java and Spring Boot to securely route traffic, manage payloads, and authenticate requests across multiple downstream microservices.',
+      id: 'enterprise-multi-agent-platform',
+      title: 'Enterprise Multi-Agent AI Orchestration Platform',
+      category: 'Multi-Agent & LLM',
+      technologies: ['Python', 'LangChain', 'FastAPI', 'React', 'PostgreSQL', 'Docker'],
+      description: 'Engineered an asynchronous multi-agent orchestration engine that translates natural-language queries into parallelized DAGs, reducing overall task execution latency by 40%.',
       highlights: [
-        'Architected a distributed API Gateway in Java and Spring Boot to securely route traffic, manage payloads, and authenticate requests across multiple downstream microservices.',
-        'Engineered a low-latency Distributed Rate Limiter implementing the Token Bucket algorithm via Redis, preventing API abuse and ensuring high availability under simulated traffic spikes.',
-        'Designed a centralized logging and monitoring interceptor to track real-time API latency and error rates, storing transaction metrics in an optimized PostgreSQL schema.'
+        'Engineered an asynchronous multi-agent orchestration engine that translates natural-language queries into parallelized DAGs, reducing overall task execution latency by 40%.',
+        'Designed an intelligent LLM routing dispatcher that enforces strict schema validation, guaranteeing deterministic, structured outputs and eliminating malformed API payloads.',
+        'Implemented a self-healing LLM invocation pipeline featuring cross-provider fallback routing and exponential backoff, achieving 100% system uptime against external API rate limits.',
+        'Parallelized sub-task execution using Python\'s asyncio, backed by a hybrid PostgreSQL state management system to persist complex, unpredictable LLM workflows.'
       ],
       keyInnovations: [
-        'Redis Token Bucket Algorithm with sub-millisecond check latency',
-        'JWT Gateway Routing & Dynamic Payload Interception',
-        'PostgreSQL Real-time Metrics Audit Interceptor'
+        'Dynamic DAG Query-to-Workflow Compiler reducing latency by 40%',
+        'Zero-Malformed Output Schema Validation Dispatcher',
+        'Cross-Provider Self-Healing Fallback Pipeline with Exponential Backoff'
       ],
       architectureDiagram: `
 ┌──────────────────┐      ┌─────────────────────────────┐      ┌───────────────────────────┐
-│ Client Traffic   │ ───► │ Spring Boot API Gateway     │ ───► │ Redis Cluster             │
-│ (HTTP/HTTPS)     │      │ (JWT Token & Route Filter)  │      │ (Token Bucket Rate Check) │
-└──────────────────┘      └──────────────┬──────────────┘      └───────────────────────────┘
-                                         │
-                                         ▼
-                          ┌─────────────────────────────┐
-                          │ PostgreSQL Database         │
-                          │ (Latency & Audit Logging)   │
-                          └─────────────────────────────┘
+│ User Query (NL)  │ ───► │ Intent Router & Dispatcher  │ ───► │ Parallelized DAG Engine   │
+│                  │      │ (Strict Schema Validation)  │      │ (Python Asyncio Workers)  │
+└──────────────────┘      └──────────────┬──────────────┘      └─────────────┬─────────────┘
+                                         │                                   │
+                                         ▼                                   ▼
+                          ┌─────────────────────────────┐      ┌───────────────────────────┐
+                          │ Self-Healing LLM Pipeline   │      │ Hybrid PostgreSQL DB      │
+                          │ (Cross-Provider Fallbacks)  │      │ (Workflow State History)  │
+                          └─────────────────────────────┘      └───────────────────────────┘
       `
     },
     {
-      id: 'async-task-orchestration',
-      title: 'Asynchronous Task Orchestration Engine',
-      category: 'Async & Python',
-      technologies: ['Python', 'FastAPI', 'PostgreSQL', 'React', 'Docker'],
-      description: 'Developed a scalable backend engine that dynamically schedules and processes interdependent tasks within a Directed Acyclic Graph (DAG) architecture.',
+      id: 'slm-instruction-fine-tuning',
+      title: 'SLM Instruction Fine-Tuning',
+      category: 'Fine-Tuning & SLM',
+      technologies: ['Python', 'PyTorch', 'Unsloth', 'QLoRA', 'HuggingFace TRL', 'vLLM'],
+      description: 'Fine-tuned an open-weights Llama 3 (8B) model using Unsloth and QLoRA, optimizing the model to extract strictly typed JSON payloads from unstructured enterprise support tickets.',
       highlights: [
-        'Developed a scalable backend engine that dynamically schedules and processes interdependent tasks within a Directed Acyclic Graph (DAG) architecture.',
-        'Utilized Python\'s asyncio to evaluate and execute processes in parallel, reducing overall system latency versus synchronous processing.',
-        'Containerized the multi-tier application (frontend, backend, database) using Docker to ensure environment parity and seamless deployment.'
+        'Fine-tuned an open-weights Llama 3 (8B) model using Unsloth and QLoRA, optimizing the model to extract strictly typed JSON payloads (issue severity, component, intent) from unstructured enterprise support tickets.',
+        'Curated a synthetic training dataset of 5,000+ support interactions and evaluated model performance based on JSON Schema Validation Pass Rate, achieving a 98% perfectly parsable output rate.',
+        'Implemented Parameter-Efficient Fine-Tuning (PEFT) to update <2% of total model parameters, drastically reducing VRAM requirements for training while preventing catastrophic forgetting.'
       ],
       keyInnovations: [
-        'DAG Topological Dependency Resolver & Topological Ordering',
-        'Non-blocking Asyncio Worker Threads for Parallel Execution',
-        'Full Multi-tier Docker Containerization with Parity'
+        'Unsloth 2x Faster QLoRA Parameter-Efficient Tuning (<2% parameters)',
+        '98% JSON Schema Validation Pass Rate on Enterprise Tickets',
+        'High-Throughput Low-Latency Serving with vLLM'
       ],
       architectureDiagram: `
 ┌──────────────────┐      ┌─────────────────────────────┐      ┌───────────────────────────┐
-│ DAG Workflow     │ ───► │ FastAPI Async Engine        │ ───► │ Python Asyncio Workers    │
-│ Specification    │      │ (Dependency Graph Resolver) │      │ (Parallel Task Exec Pool) │
-└──────────────────┘      └──────────────┬──────────────┘      └───────────────────────────┘
-                                         │
-                                         ▼
-                          ┌─────────────────────────────┐
-                          │ PostgreSQL & Docker Engine  │
-                          │ (State & Execution Audit)   │
-                          └─────────────────────────────┘
+│ 5,000+ Tickets   │ ───► │ QLoRA & Unsloth Pipeline    │ ───► │ Fine-Tuned Llama 3 (8B)   │
+│ (Unstructured)   │      │ (PEFT <2% Total Parameters) │      │ (Strict JSON Extraction)  │
+└──────────────────┘      └──────────────┬──────────────┘      └─────────────┬─────────────┘
+                                         │                                   │
+                                         ▼                                   ▼
+                          ┌─────────────────────────────┐      ┌───────────────────────────┐
+                          │ Synthetic Evaluation Suite  │      │ High-Throughput vLLM      │
+                          │ (98% Schema Pass Rate)      │      │ (Low-Latency Serving)     │
+                          └─────────────────────────────┘      └───────────────────────────┘
       `
     },
     {
-      id: 'real-estate-property-management',
-      title: 'Real Estate Property Management Platform',
-      category: 'Full-Stack Node.js',
-      technologies: ['Node.js', 'Express.js', 'MongoDB', 'React', 'EJS'],
-      description: 'Built a scalable property management web application using MVC architecture to deliver a responsive UI and secure RESTful APIs.',
+      id: 'enterprise-rag-document-intelligence',
+      title: 'Enterprise RAG Document Intelligence Pipeline',
+      category: 'RAG & Vector Search',
+      technologies: ['Python', 'LangChain', 'FastAPI', 'Pinecone', 'Hybrid Search (BM25)'],
+      description: 'Engineered a scalable Retrieval-Augmented Generation (RAG) pipeline to ingest, chunk, and embed large-scale proprietary text datasets into a Pinecone vector database for low-latency retrieval.',
       highlights: [
-        'Built a scalable property management web application using MVC architecture to deliver a responsive UI and secure RESTful APIs.',
-        'Enhanced backend security by implementing password hashing, role-based access control, and comprehensive payload validation.'
+        'Engineered a scalable Retrieval-Augmented Generation (RAG) pipeline to ingest, chunk, and embed large-scale proprietary text datasets into a Pinecone vector database for low-latency retrieval.',
+        'Implemented a hybrid search architecture fusing dense vector embeddings with sparse keyword search (BM25), improving context retrieval accuracy by 35%.',
+        'Designed asynchronous FastAPI endpoints to orchestrate contextual querying via LangChain, dynamically injecting retrieved vector chunks to reduce model hallucinations by over 85%.'
       ],
       keyInnovations: [
-        'Role-Based Access Control (RBAC) & Bcrypt Password Hashing',
-        'MVC Architecture separating React UI and Express APIs',
-        'Mongo Aggregation Pipelines for Property Filters'
+        'Dense + Sparse Hybrid Search (Pinecone Vector DB + BM25)',
+        '>85% Hallucination Reduction via Dynamic Context Injection',
+        'Asynchronous FastAPI Ingestion and Retrieval Orchestration'
       ],
       architectureDiagram: `
 ┌──────────────────┐      ┌─────────────────────────────┐      ┌───────────────────────────┐
-│ React UI / EJS   │ ───► │ Express.js Controller       │ ───► │ MongoDB Document Store    │
-│ Frontend Layer   │      │ (RBAC & Payload Validator)  │      │ (Properties & User Auth)  │
-└──────────────────┘      └─────────────────────────────┘      └───────────────────────────┘
+│ Enterprise Docs  │ ───► │ Chunking & Dense Embeddings │ ───► │ Pinecone Vector Database  │
+│ & Knowledge Base │      │ + Sparse Inverted Index     │      │ (Dense + BM25 Sparse)     │
+└──────────────────┘      └──────────────┬──────────────┘      └─────────────┬─────────────┘
+                                         │                                   │
+                                         ▼                                   ▼
+                          ┌─────────────────────────────┐      ┌───────────────────────────┐
+                          │ LangChain Async FastAPI     │ ───► │ Hallucination Guardrail   │
+                          │ (Contextual Prompt Inj.)    │      │ (>85% Hallucination Drop) │
+                          └─────────────────────────────┘      └───────────────────────────┘
       `
     }
   ];
@@ -93,7 +101,7 @@ export default function Projects({ projectsData }) {
     ...p
   })) : defaultProjects;
 
-  const filters = ['All', 'Backend & Distributed', 'Async & Python', 'Full-Stack Node.js'];
+  const filters = ['All', 'Multi-Agent & LLM', 'Fine-Tuning & SLM', 'RAG & Vector Search'];
 
   const filteredProjects = activeFilter === 'All'
     ? projects
@@ -117,7 +125,7 @@ export default function Projects({ projectsData }) {
             System Architecture & <span className="text-sky-400">Core Projects</span>
           </h2>
           <p className="text-slate-400 text-sm sm:text-base">
-            Deep dive into production-grade systems built for high availability, low latency, and clean modular architecture.
+            Deep dive into production-grade AI systems built for multi-agent DAG execution, parameter-efficient fine-tuning, and low-latency hybrid RAG retrieval.
           </p>
         </div>
 

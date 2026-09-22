@@ -7,91 +7,59 @@ export default function TechnicalSkills({ skillsData }) {
 
   const categories = [
     {
+      key: 'generativeAi',
+      title: 'Generative AI',
+      icon: Cpu,
+      skills: [
+        { name: 'RAG Architecture', level: 95, desc: 'Context Injection, Chunking, Retrieval Guardrails' },
+        { name: 'Multi-Agent Systems', level: 92, desc: 'Parallelized DAGs, Supervisor & Worker Routing' },
+        { name: 'LangChain', level: 90, desc: 'Chains, Memory, Agent Execution, Tool Integration' },
+        { name: 'LlamaIndex', level: 88, desc: 'Vector Stores, Document Indices, Query Engines' },
+        { name: 'Prompt Engineering', level: 94, desc: 'Few-Shot, CoT, System Prompting, Structured I/O' },
+        { name: 'Function/Tool Calling', level: 92, desc: 'Dynamic Intent Parsing, Strict Schema Validation' },
+        { name: 'Fine Tuning (QLoRA)', level: 88, desc: 'PEFT, Unsloth, HuggingFace TRL, VRAM Optimization' },
+        { name: 'Gemini / Llama Integration', level: 90, desc: 'vLLM Serving, API Integrations, Open-Weights' },
+      ]
+    },
+    {
+      key: 'mlDataStorage',
+      title: 'ML & Data & Storage',
+      icon: Database,
+      skills: [
+        { name: 'PyTorch', level: 88, desc: 'Tensors, Model Evaluation, Loss Monitoring' },
+        { name: 'HuggingFace', level: 90, desc: 'Transformers, Datasets, TRL, Model Hub' },
+        { name: 'Pinecone (Vector DB)', level: 92, desc: 'Vector Indexing, Namespaces, Metadata Filtering' },
+        { name: 'Hybrid Search (Dense + Sparse, BM25)', level: 90, desc: 'Fusing Reciprocal Rank & Keyword BM25' },
+        { name: 'PostgreSQL (Relational & JSONB)', level: 88, desc: 'Hybrid Workflows, JSONB State Persistence' },
+        { name: 'MongoDB', level: 85, desc: 'Document Storage, Flexible Schema Pipelines' },
+      ]
+    },
+    {
       key: 'languages',
       title: 'Languages',
       icon: Code,
       skills: [
-        { name: 'Java', level: 90, desc: 'Spring Boot, OOP, Microservices' },
-        { name: 'JavaScript', level: 90, desc: 'ES6+, Async/Await, DOM' },
-        { name: 'TypeScript', level: 85, desc: 'Strong Typing, Interfaces' },
-        { name: 'Python', level: 85, desc: 'FastAPI, Asyncio, DAG' },
-        { name: 'SQL', level: 88, desc: 'PostgreSQL, MySQL, Indexing' },
-        { name: 'Groovy', level: 80, desc: 'Backend Logic & Auth Scripting' },
+        { name: 'Python', level: 95, desc: 'Asyncio, PyTorch, LangChain, FastAPI Backend' },
+        { name: 'JavaScript / TypeScript', level: 90, desc: 'ES6+, Type Safety, React, Node.js' },
+        { name: 'Java', level: 85, desc: 'OOP Architecture, Enterprise Systems Integration' },
+        { name: 'SQL', level: 88, desc: 'Complex Queries, Indexing, Schema Optimization' },
       ]
     },
     {
-      key: 'backendAndFrameworks',
-      title: 'Backend & Frameworks',
+      key: 'backendAndInfrastructure',
+      title: 'Backend & Infrastructure',
       icon: Server,
       skills: [
-        { name: 'Spring Boot', level: 92, desc: 'REST, JPA, Security, Gateway' },
-        { name: 'Spring MVC', level: 88, desc: 'Controllers, Filters, Interceptors' },
-        { name: 'Spring Data JPA', level: 88, desc: 'Repositories, Entity Mapping' },
-        { name: 'Node.js', level: 88, desc: 'Event Loop, Non-blocking I/O' },
-        { name: 'Express.js', level: 85, desc: 'REST APIs, Middleware' },
-        { name: 'FastAPI', level: 85, desc: 'Async Endpoints, OpenAPI' },
-        { name: 'OOP & Design Patterns', level: 90, desc: 'Solid, Factory, Singleton, Strategy' },
-      ]
-    },
-    {
-      key: 'frontend',
-      title: 'Frontend & UI',
-      icon: Layers,
-      skills: [
-        { name: 'React.js', level: 90, desc: 'Hooks, Custom Components, SPA' },
-        { name: 'Redux', level: 82, desc: 'State Management, Actions' },
-        { name: 'Context API', level: 88, desc: 'Lightweight App State' },
-        { name: 'HTML5 / CSS3', level: 92, desc: 'Flexbox, Grid, Animations' },
-        { name: 'Vite', level: 90, desc: 'HMR, Fast Bundling' },
-        { name: 'Zustand', level: 80, desc: 'Modern React State' },
-      ]
-    },
-    {
-      key: 'apisAndArchitecture',
-      title: 'APIs & Architecture',
-      icon: Cpu,
-      skills: [
-        { name: 'RESTful APIs', level: 95, desc: 'Clean Contract Design & HTTP Specs' },
-        { name: 'GraphQL (Apollo)', level: 85, desc: 'Queries, Mutations, Schema Design' },
-        { name: 'Microservices Architecture', level: 88, desc: 'Decoupled Systems, Service Discovery' },
-        { name: 'System Design', level: 85, desc: 'Scalability, Load Balancing, Caching' },
-        { name: 'Distributed Systems', level: 86, desc: 'Token Bucket, Rate Limiting, Fault Tolerance' },
-        { name: 'JSON/XML Exchange', level: 90, desc: 'Payload Parsing & Serialisation' },
-      ]
-    },
-    {
-      key: 'databasesAndCaching',
-      title: 'Databases & Caching',
-      icon: Database,
-      skills: [
-        { name: 'PostgreSQL', level: 88, desc: 'Relational Schemas, Indexing' },
-        { name: 'Redis', level: 90, desc: 'Caching, Rate Limiting, Key-Value' },
-        { name: 'MongoDB', level: 85, desc: 'NoSQL Aggregation, Document Store' },
-        { name: 'MySQL', level: 85, desc: 'Transactions, Joins, Queries' },
-      ]
-    },
-    {
-      key: 'devOpsAndTools',
-      title: 'DevOps & Tools',
-      icon: Terminal,
-      skills: [
-        { name: 'Docker', level: 88, desc: 'Containerization & Multi-stage Builds' },
-        { name: 'Docker Compose', level: 86, desc: 'Multi-container Orchestration' },
-        { name: 'Git & GitHub', level: 92, desc: 'Version Control & Branching Strategy' },
-        { name: 'CI/CD Pipelines', level: 80, desc: 'Automated Testing & Build Automation' },
-        { name: 'Postman / ReadyAPI', level: 90, desc: 'API Testing & Automation Suites' },
-      ]
-    },
-    {
-      key: 'practices',
-      title: 'Practices & Methodologies',
-      icon: ShieldCheck,
-      skills: [
-        { name: 'Agile / Scrum', level: 90, desc: 'Sprints, Standups, Retrospectives' },
-        { name: 'Data Structures & Algo', level: 88, desc: 'Optimized Time/Space Complexity' },
-        { name: 'Code Reviews', level: 90, desc: 'Clean Code, Standard Practices' },
-        { name: 'Unit & Integration Testing', level: 86, desc: 'JUnit, Mockito, Integration Tests' },
-        { name: 'Technical Documentation', level: 90, desc: 'System Specs, API Docs' },
+        { name: 'FastAPI', level: 92, desc: 'Asynchronous Endpoints, Pydantic Schema Validation' },
+        { name: 'Node.js', level: 88, desc: 'Event Loop, Non-blocking I/O, Microservices' },
+        { name: 'Express.js', level: 86, desc: 'REST APIs, Middleware, Service Integration' },
+        { name: 'React.js', level: 90, desc: 'Modern UI, State Management, Custom Hooks' },
+        { name: 'GraphQL', level: 85, desc: 'Dynamic Payloads, Schema Queries & Mutations' },
+        { name: 'Docker', level: 88, desc: 'Containerization, Multi-stage Builds, Parity' },
+        { name: 'vLLM', level: 88, desc: 'High-Throughput PagedAttention Serving' },
+        { name: 'Unsloth', level: 90, desc: '2x Faster QLoRA Fine-Tuning Execution' },
+        { name: 'Git', level: 92, desc: 'Branching, Collaboration, Version Control' },
+        { name: 'Cursor & GitHub Copilot', level: 95, desc: 'AI-Assisted Engineering, Accelerated Dev' },
       ]
     }
   ];
@@ -132,7 +100,7 @@ export default function TechnicalSkills({ skillsData }) {
             Interactive <span className="text-sky-400">Skill Matrix</span>
           </h2>
           <p className="text-slate-400 text-sm sm:text-base">
-            Comprehensive breakdown of 25+ technology skills across backend engineering, full-stack development, database optimization, and DevOps.
+            Comprehensive breakdown of core technical skills across Generative AI, machine learning, vector storage, and scalable backend infrastructure.
           </p>
         </div>
 
@@ -144,7 +112,7 @@ export default function TechnicalSkills({ skillsData }) {
             <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
             <input
               type="text"
-              placeholder="Search skill (e.g. Redis, Java)..."
+              placeholder="Search skill (e.g. LangChain, Pinecone, Python)..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="w-full pl-10 pr-4 py-2.5 rounded-lg bg-[#111827] border border-[#1e293b] text-slate-100 placeholder-slate-500 focus:border-sky-400 focus:outline-none text-xs sm:text-sm"
