@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { ArrowUpRight, Menu, X } from 'lucide-react';
+import { ArrowUpRight, FileText, Menu, X } from 'lucide-react';
 
 const links = [
   { name: 'Selected work', href: '#projects' },
@@ -47,10 +47,23 @@ export default function Navbar({ activeSection }) {
             <a key={link.href} href={link.href} aria-current={activeSection === link.href.slice(1) ? 'location' : undefined}>{link.name}</a>
           ))}
         </nav>
-        <a className="nav-contact" href="#contact">Let's talk <ArrowUpRight size={15} /></a>
-        <button ref={menuButton} className="icon-button menu-toggle" aria-label={mobileMenuOpen ? 'Close navigation' : 'Open navigation'} aria-expanded={mobileMenuOpen} aria-controls="mobile-navigation" onClick={() => setMobileMenuOpen(value => !value)}>
-          {mobileMenuOpen ? <X size={21} /> : <Menu size={21} />}
-        </button>
+        <div className="nav-actions">
+          <a
+            className="nav-resume"
+            href={`${import.meta.env.BASE_URL}Sharath_Chandra_AI_Engineer_Resume.pdf`}
+            target="_blank"
+            rel="noopener noreferrer"
+            title="View résumé (PDF, opens in a new tab)"
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            <FileText size={16} aria-hidden="true" />
+            <span>View résumé</span>
+          </a>
+          <a className="nav-contact" href="#contact">Let's talk <ArrowUpRight size={15} /></a>
+          <button ref={menuButton} className="icon-button menu-toggle" aria-label={mobileMenuOpen ? 'Close navigation' : 'Open navigation'} aria-expanded={mobileMenuOpen} aria-controls="mobile-navigation" onClick={() => setMobileMenuOpen(value => !value)}>
+            {mobileMenuOpen ? <X size={21} /> : <Menu size={21} />}
+          </button>
+        </div>
       </div>
       <nav id="mobile-navigation" className="mobile-nav" aria-label="Mobile navigation" hidden={!mobileMenuOpen}>
         {[...links, { name: 'Get in touch', href: '#contact' }].map((link, index) => (
@@ -58,7 +71,6 @@ export default function Navbar({ activeSection }) {
             <span className="mono">0{index + 1}</span>{link.name}<ArrowUpRight size={17} />
           </a>
         ))}
-        <a href={`${import.meta.env.BASE_URL}Sharath_Chandra_AI_Engineer_Resume.pdf`} target="_blank" rel="noopener noreferrer" onClick={() => setMobileMenuOpen(false)}>View résumé <ArrowUpRight size={17} /></a>
       </nav>
     </header>
   );

@@ -19,11 +19,16 @@ test('responsive content, navigation, résumé, and skip link', async ({ page })
   await page.keyboard.press('Enter');
   await expect(page.locator('main')).toBeFocused();
 
-  for (const width of [320, 390, 768, 1024, 1440]) {
+  const resume = page.locator('.nav-inner').getByRole('link', { name: 'View résumé', exact: true });
+  for (const width of [320, 360, 390, 768, 800, 900, 1024, 1440]) {
     await page.setViewportSize({ width, height: 900 });
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+    await expect(resume).toBeInViewport();
+    await page.locator('#experience').scrollIntoViewIfNeeded();
+    await expect(resume).toBeInViewport();
+    await resume.click({ trial: true });
   }
-  const resume = page.getByRole('link', { name: 'View résumé', exact: true }).first();
+  await expect(resume).toHaveAttribute('target', '_blank');
   const response = await page.request.get(await resume.getAttribute('href'));
   expect(response.ok()).toBe(true);
   expect(response.headers()['content-type']).toContain('application/pdf');

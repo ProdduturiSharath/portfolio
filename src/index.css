@@ -78,18 +78,21 @@ h2 { font: 400 clamp(42px, 4.4vw, 62px)/1.05 var(--serif); letter-spacing: -1.15
 
 /* Quiet, fixed navigation */
 .site-header { position: fixed; z-index: 40; inset: 0 0 auto; background: var(--bg); border-bottom: 1px solid var(--line); }
-.nav-inner { height: 88px; display: flex; align-items: center; justify-content: space-between; gap: 32px; }
-.wordmark { display: inline-flex; align-items: center; gap: 15px; font-size: var(--text-control); font-weight: 500; }
+.nav-inner { height: 88px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+.wordmark { display: inline-flex; flex-shrink: 0; align-items: center; gap: 15px; font-size: var(--text-control); font-weight: 500; white-space: nowrap; }
 .monogram { font: italic 36px/1 var(--serif); letter-spacing: -5px; width: 44px; color: var(--accent); padding-right: 5px; }
 .monogram > span { position: relative; top: 4px; }
 .wordmark-role { display: block; font: 8px var(--mono); letter-spacing: 2px; color: var(--subtle); margin-top: 6px; }
-.desktop-nav { display: flex; gap: 32px; margin-left: auto; margin-right: 44px; }
+.desktop-nav { display: flex; flex-shrink: 0; gap: 24px; margin-left: auto; margin-right: 8px; white-space: nowrap; }
 .desktop-nav a { padding-block: 16px; font-size: var(--text-control); color: var(--muted); position: relative; transition: color 180ms; }
 .desktop-nav a::after { content: ''; position: absolute; bottom: 7px; left: 0; width: 100%; height: 1px; background: var(--accent); transform: scaleX(0); transform-origin: left; transition: transform 250ms; }
 .desktop-nav a:hover, .desktop-nav a[aria-current] { color: var(--text); }
 .desktop-nav a[aria-current]::after { transform: scaleX(1); }
 .nav-contact { display: flex; align-items: center; gap: 26px; border: 1px solid #494c3f; padding: 11px 16px; font-size: var(--text-control); border-radius: 3px; transition: border-color 180ms; }
 .nav-contact:hover { border-color: var(--accent); }
+.nav-actions { display: flex; flex-shrink: 0; align-items: center; gap: 12px; }
+.nav-resume { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 44px; padding: 10px 16px; border: 1px solid var(--accent); border-radius: 3px; background: rgb(205 187 152 / 6%); color: var(--accent); font-size: var(--text-control); font-weight: 500; white-space: nowrap; transition: background 180ms, color 180ms, border-color 180ms; }
+.nav-resume:hover { background: var(--accent); color: var(--bg); border-color: var(--accent); }
 .menu-toggle, .mobile-nav { display: none; }
 
 /* Hero: typography and a single sculptural focal point */
@@ -354,7 +357,11 @@ h2 { font: 400 clamp(42px, 4.4vw, 62px)/1.05 var(--serif); letter-spacing: -1.15
   .hero-actions { gap: 22px; }
   .hero-actions .button { gap: 17px; padding-inline: 17px; }
   .hero-edition { display: none; }
-  .desktop-nav { gap: 24px; margin-right: 16px; }
+  .nav-inner { gap: 18px; }
+  .desktop-nav { gap: 18px; margin-right: 0; }
+  .nav-actions { gap: 8px; }
+  .nav-resume { gap: 8px; padding-inline: 12px; }
+  .nav-contact { gap: 10px; padding-inline: 12px; }
   .experience-layout { gap: 58px; grid-template-columns: .75fr 1.25fr; }
   .contact-layout { gap: 58px; }
   .skills-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -371,7 +378,8 @@ h2 { font: 400 clamp(42px, 4.4vw, 62px)/1.05 var(--serif); letter-spacing: -1.15
   .section { padding-block: 78px; }
   .nav-inner { height: 74px; gap: 15px; }
   .desktop-nav { display: none; }
-  .nav-contact { margin-left: auto; padding: 10px 14px; gap: 14px; }
+  .nav-actions { margin-left: auto; }
+  .nav-contact { display: none; }
   .menu-toggle { display: inline-flex; }
   .mobile-nav { display: flex; flex-direction: column; gap: 4px; padding: 16px 24px 24px; background: var(--bg); border-top: 1px solid var(--line); box-shadow: 0 25px 35px rgb(0 0 0 / 20%); }
   .mobile-nav a { display: flex; align-items: center; gap: 20px; padding: 17px 6px; font-size: 14px; color: var(--muted); border-bottom: 1px solid var(--line); }
@@ -436,7 +444,7 @@ h2 { font: 400 clamp(42px, 4.4vw, 62px)/1.05 var(--serif); letter-spacing: -1.15
   .wordmark { gap: 9px; font-size: var(--text-caption); }
   .wordmark-role { font-size: 7px; }
   .monogram { width: 35px; font-size: 32px; }
-  .nav-contact { font-size: var(--text-caption); gap: 8px; padding: 9px 11px; }
+  .nav-resume { font-size: var(--text-caption); padding-inline: 11px; }
   .menu-toggle { width: 36px; }
   .hero-grid { padding-top: 48px; gap: 42px; }
   .hero-copy h1 { font-size: clamp(61px, 16.6vw, 89px); letter-spacing: -1.9px; }
@@ -506,9 +514,10 @@ h2 { font: 400 clamp(42px, 4.4vw, 62px)/1.05 var(--serif); letter-spacing: -1.15
   .architecture-summary-label { gap: 9px; }
   .architecture-map { padding: 18px 14px; }
 }
+@media (max-width: 379px) {
+  .wordmark > span:last-child { display: none; }
+}
 @media (max-width: 359px) {
-  .nav-contact { display: none; }
-  .menu-toggle { margin-left: auto; }
   .hero-eyebrow { letter-spacing: .5px; font-size: 6.5px; }
   .hero-actions { gap: 15px; }
   .hero-actions .button { padding-inline: 12px; gap: 10px; }
