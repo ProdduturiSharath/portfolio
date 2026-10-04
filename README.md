@@ -22,7 +22,7 @@ Welcome to the source code for my personal AI Engineer portfolio! 🚀
 
 This is a modern, high-performance, single-page developer portfolio designed to showcase my experience and projects as an **AI Engineer**. I specialize in architecting and deploying Generative AI ecosystems, multi-agent orchestration, advanced RAG pipelines, and instruction fine-tuning for Small Language Models (SLMs).
 
-The portfolio features a sleek enterprise dark-mode aesthetic with clean lines, solid slate accents, subtle micro-animations, interactive ASCII system architecture diagrams, and an interactive terminal bio. Built on a **100% React-only serverless architecture**, it statically bundles all resume data locally via `src/services/api.js` for instant global rendering with zero cold starts and zero backend hosting dependencies.
+The portfolio pairs warm charcoal, ivory, and bronze with editorial typography and a gently rotating 3D sculpture. Isometric project illustrations, focused case studies, and restrained scroll reveals keep the work at the center. Built on a **100% React-only serverless architecture**, it bundles resume data locally via `src/services/api.js`.
 
 ---
 
@@ -53,9 +53,12 @@ The portfolio features a sleek enterprise dark-mode aesthetic with clean lines, 
 
 ## Key Architecture & Features
 
-- **Enterprise Dark-Mode UI:** Solid dark palette (`#0b0f19`, `#111827`, `#1f2937`) with slate borders (`#1e293b`), crisp typography (`Inter`, `JetBrains Mono`), and zero glossy glassmorphism.
-- **ASCII Architecture Visualizations:** Interactive ASCII flowcharts illustrating intent routing, parallel DAG execution, and hybrid retrieval pipelines.
-- **Interactive Terminal Hero:** Terminal-styled profile card toggling between `bio.json` and `stack.config` with real-time command line styling.
+- **Editorial Dark-Mode UI:** Warm charcoal surfaces, ivory text, and bronze accents with Instrument Serif, Inter, and IBM Plex Mono. Design tokens live in `src/index.css`.
+- **Lightweight 3D Hero:** A shaded, perspective-projected trefoil sculpture rendered with Canvas 2D from real 3D geometry. Subtle pointer response, capped pixel density, and a 30fps limit; no 3D runtime dependency or model downloads.
+- **Purposeful Motion:** A visible pause control, operating-system reduced-motion support, and rendering suspended when the sculpture is off-screen or the tab is hidden.
+- **Project Case Studies:** Original isometric SVG artwork, category filters, and keyboard-accessible native dialogs with engineering highlights and architecture details.
+- **Responsive Architecture Diagrams:** Expandable processing flows and supporting-system cards, sourced from each project's `architecture` data. Steps stack vertically on phones without shrinking text or requiring sideways scrolling.
+- **Data-Driven Expertise:** Searchable skill categories sourced directly from the portfolio dataset, with expandable professional experience.
 - **Serverless Contact Form:** Fully functional contact form integrated directly with [Formspree](https://formspree.io/) featuring client-side schema validation, asynchronous JSON dispatch, and error handling.
 - **Native Static Data:** Resume data and project inventories are bundled locally for instant load times and complete decoupling from external database APIs.
 - **Responsive Layout:** Optimized across mobile, tablet, and widescreen desktop displays.
@@ -69,7 +72,7 @@ If you would like to run or inspect this project locally:
 1. **Clone the repository:**
    ```bash
    git clone https://github.com/ProdduturiSharath/portfolio.git
-   cd portfolio/frontend
+   cd portfolio
    ```
 
 2. **Install dependencies:**
@@ -87,7 +90,7 @@ If you would like to run or inspect this project locally:
    ```bash
    npm run dev
    ```
-   Open [http://localhost:3000](http://localhost:3000) (or the Vite dev server port shown in terminal) to view the application.
+   Open [http://localhost:3000/portfolio/](http://localhost:3000/portfolio/) (or the Vite dev server port shown in terminal) to view the application.
 
 5. **Build for production:**
    ```bash
@@ -103,24 +106,33 @@ If you would like to run or inspect this project locally:
 
 ## Testing & Quality Assurance
 
-The project includes an automated 4-tier end-to-end test suite verifying feature coverage, boundary conditions, architecture security, and distribution artifact integrity:
+Seven browser regression scenarios cover responsive layouts (320–1440px), project dialog focus handling, detailed architecture diagrams, search/filter interactions, contact form validation and mocked responses, animation preferences, and automated WCAG accessibility checks:
 
 ```bash
-# Run from repository root:
+# Run from the repository root:
+npm install
+npx playwright install chromium
 npm test
-# or
-node e2e_tests/test_runner.js
 ```
+
+On Linux, Playwright may also require `npx playwright install-deps chromium`. The browser suite starts its own Vite server on port 3100. Contact requests are intercepted; tests do not send real messages.
 
 ---
 
 ## Deployment
 
-Deploy the compiled distribution bundle to GitHub Pages:
+The live site is served from the `gh-pages` branch at **https://prodduturisharath.github.io/portfolio/**. The Vite base path is `/portfolio/`.
+
+Set `VITE_FORMSPREE_FORM_ID` in your local `.env` before building so contact submissions use your configured form. Then deploy the compiled distribution bundle:
 
 ```bash
 npm run deploy
 ```
+
+The versions preceding the 3D redesign are preserved in these branches:
+
+- [`backup/previous-portfolio`](https://github.com/ProdduturiSharath/portfolio/tree/backup/previous-portfolio): previous source code.
+- [`backup/previous-deployment`](https://github.com/ProdduturiSharath/portfolio/tree/backup/previous-deployment): previous deployed build.
 
 ---
 

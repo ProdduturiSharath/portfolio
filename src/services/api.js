@@ -126,18 +126,47 @@ const PORTFOLIO_DATA = {
         "Zero-Malformed Output Schema Validation Dispatcher",
         "Cross-Provider Self-Healing Fallback Pipeline with Exponential Backoff"
       ],
-      architectureDiagram: `
-┌──────────────────┐      ┌─────────────────────────────┐      ┌───────────────────────────┐
-│ User Query (NL)  │ ───► │ Intent Router & Dispatcher  │ ───► │ Parallelized DAG Engine   │
-│                  │      │ (Strict Schema Validation)  │      │ (Python Asyncio Workers)  │
-└──────────────────┘      └──────────────┬──────────────┘      └─────────────┬─────────────┘
-                                         │                                   │
-                                         ▼                                   ▼
-                          ┌─────────────────────────────┐      ┌───────────────────────────┐
-                          │ Self-Healing LLM Pipeline   │      │ Hybrid PostgreSQL DB      │
-                          │ (Cross-Provider Fallbacks)  │      │ (Workflow State History)  │
-                          └─────────────────────────────┘      └───────────────────────────┘
-      `
+      architecture: {
+        overview: "Natural language becomes a validated, parallel workflow, backed by resilient model calls and persistent execution state.",
+        flowLabel: "Request execution",
+        steps: [
+          {
+            id: "query",
+            title: "User query",
+            description: "A natural-language request enters the orchestration service.",
+            technology: "React · FastAPI"
+          },
+          {
+            id: "router",
+            title: "Intent routing",
+            description: "The LLM dispatcher interprets intent and validates structured task payloads.",
+            technology: "LangChain · Schema validation"
+          },
+          {
+            id: "execution",
+            title: "Parallel execution",
+            description: "Independent tasks run concurrently within a directed acyclic graph.",
+            technology: "Python · asyncio"
+          }
+        ],
+        supportLabel: "Reliability & state",
+        supports: [
+          {
+            id: "resilience",
+            relationship: "Supports LLM routing",
+            title: "Provider resilience",
+            description: "Cross-provider fallbacks and exponential backoff handle failed or rate-limited model calls.",
+            technology: "Fallback routing · Retry pipeline"
+          },
+          {
+            id: "state",
+            relationship: "Persists workflow execution",
+            title: "Workflow state",
+            description: "Task state and execution history are stored for complex, long-running LLM workflows.",
+            technology: "PostgreSQL · JSONB"
+          }
+        ]
+      }
     },
     {
       id: "slm-instruction-fine-tuning",
@@ -155,18 +184,47 @@ const PORTFOLIO_DATA = {
         "98% JSON Schema Validation Pass Rate on Enterprise Tickets",
         "High-Throughput Low-Latency Serving with vLLM"
       ],
-      architectureDiagram: `
-┌──────────────────┐      ┌─────────────────────────────┐      ┌───────────────────────────┐
-│ 5,000+ Tickets   │ ───► │ QLoRA & Unsloth Pipeline    │ ───► │ Fine-Tuned Llama 3 (8B)   │
-│ (Unstructured)   │      │ (PEFT <2% Total Parameters) │      │ (Strict JSON Extraction)  │
-└──────────────────┘      └──────────────┬──────────────┘      └─────────────┬─────────────┘
-                                         │                                   │
-                                         ▼                                   ▼
-                          ┌─────────────────────────────┐      ┌───────────────────────────┐
-                          │ Synthetic Evaluation Suite  │      │ High-Throughput vLLM      │
-                          │ (98% Schema Pass Rate)      │      │ (Low-Latency Serving)     │
-                          └─────────────────────────────┘      └───────────────────────────┘
-      `
+      architecture: {
+        overview: "A focused training pipeline adapts an open-weights model to extract structured data from enterprise support tickets.",
+        flowLabel: "Instruction fine-tuning",
+        steps: [
+          {
+            id: "dataset",
+            title: "Support dataset",
+            description: "5,000+ synthetic support interactions form the instruction dataset.",
+            technology: "Enterprise support tickets"
+          },
+          {
+            id: "training",
+            title: "Efficient training",
+            description: "QLoRA updates fewer than 2% of model parameters to reduce training memory needs.",
+            technology: "Unsloth · QLoRA · TRL"
+          },
+          {
+            id: "model",
+            title: "Adapted model",
+            description: "Llama 3 extracts typed JSON fields for severity, component, and intent.",
+            technology: "Llama 3 · 8B parameters"
+          }
+        ],
+        supportLabel: "Evaluation & serving",
+        supports: [
+          {
+            id: "evaluation",
+            relationship: "Validates model output",
+            title: "Schema evaluation",
+            description: "A synthetic evaluation suite checks JSON schema compliance, achieving a 98% pass rate.",
+            technology: "JSON Schema validation"
+          },
+          {
+            id: "serving",
+            relationship: "Serves the adapted model",
+            title: "Inference serving",
+            description: "The fine-tuned model is served through vLLM for high-throughput, low-latency inference.",
+            technology: "vLLM"
+          }
+        ]
+      }
     },
     {
       id: "enterprise-rag-document-intelligence",
@@ -184,18 +242,47 @@ const PORTFOLIO_DATA = {
         ">85% Hallucination Reduction via Dynamic Context Injection",
         "Asynchronous FastAPI Ingestion and Retrieval Orchestration"
       ],
-      architectureDiagram: `
-┌──────────────────┐      ┌─────────────────────────────┐      ┌───────────────────────────┐
-│ Enterprise Docs  │ ───► │ Chunking & Dense Embeddings │ ───► │ Pinecone Vector Database  │
-│ & Knowledge Base │      │ + Sparse Inverted Index     │      │ (Dense + BM25 Sparse)     │
-└──────────────────┘      └──────────────┬──────────────┘      └─────────────┬─────────────┘
-                                         │                                   │
-                                         ▼                                   ▼
-                          ┌─────────────────────────────┐      ┌───────────────────────────┐
-                          │ LangChain Async FastAPI     │ ───► │ Hallucination Guardrail   │
-                          │ (Contextual Prompt Inj.)    │      │ (>85% Hallucination Drop) │
-                          └─────────────────────────────┘      └───────────────────────────┘
-      `
+      architecture: {
+        overview: "Enterprise documents are indexed for retrieval, then relevant passages ground the model's responses at query time.",
+        flowLabel: "Document ingestion",
+        steps: [
+          {
+            id: "documents",
+            title: "Knowledge sources",
+            description: "Proprietary enterprise documents enter the ingestion pipeline.",
+            technology: "Documents · Knowledge base"
+          },
+          {
+            id: "indexing",
+            title: "Chunk & embed",
+            description: "Text is split into chunks, embedded, and prepared for dense and sparse search.",
+            technology: "LangChain · Embeddings"
+          },
+          {
+            id: "storage",
+            title: "Vector storage",
+            description: "Document embeddings are indexed for low-latency semantic retrieval.",
+            technology: "Pinecone"
+          }
+        ],
+        supportLabel: "At query time",
+        supports: [
+          {
+            id: "retrieval",
+            relationship: "Queries the indexed knowledge",
+            title: "Hybrid retrieval",
+            description: "Asynchronous endpoints combine dense vector search with BM25 to find relevant context.",
+            technology: "FastAPI · Dense + sparse search"
+          },
+          {
+            id: "generation",
+            relationship: "Uses the retrieved context",
+            title: "Grounded generation",
+            description: "Retrieved passages are injected into the prompt, reducing model hallucinations by over 85%.",
+            technology: "LangChain · Context injection"
+          }
+        ]
+      }
     }
   ],
   education: [

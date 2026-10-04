@@ -1,248 +1,124 @@
-import React, { useState } from 'react';
-import { Terminal, CheckCircle2, FileText, ChevronDown, ChevronUp, Zap } from 'lucide-react';
+import React, { useEffect, useRef, useState } from 'react';
+import { ArrowRight, ArrowUpRight, Maximize, X } from 'lucide-react';
+import ProjectVisual from './ProjectVisual';
+import ArchitectureDiagram from './ArchitectureDiagram';
+import { Reveal, useMotion } from './Motion';
 
-export default function Projects({ projectsData }) {
-  const [activeFilter, setActiveFilter] = useState('All');
-  const [openDiagramId, setOpenDiagramId] = useState('enterprise-multi-agent-platform');
+const presentation = {
+  'enterprise-multi-agent-platform': { type: 'agents', title: 'Multi-agent orchestration', metric: '40%', metricLabel: 'lower execution latency', filter: 'Multi-agent', flow: ['Natural-language query', 'Validated intent routing', 'Parallel agent execution', 'Persistent workflow state'] },
+  'slm-instruction-fine-tuning': { type: 'tuning', title: 'Instruction fine-tuning', metric: '98%', metricLabel: 'JSON schema pass rate', filter: 'Fine-tuning', flow: ['5,000+ support interactions', 'QLoRA + Unsloth training', 'Fine-tuned Llama 3 (8B)', 'Structured JSON output'] },
+  'enterprise-rag-document-intelligence': { type: 'retrieval', title: 'Document intelligence', metric: '35%', metricLabel: 'better retrieval accuracy', filter: 'RAG pipelines', flow: ['Enterprise documents', 'Chunking + embeddings', 'Dense + BM25 hybrid search', 'Context-grounded response'] },
+};
 
-  const defaultProjects = [
-    {
-      id: 'enterprise-multi-agent-platform',
-      title: 'Enterprise Multi-Agent AI Orchestration Platform',
-      category: 'Multi-Agent & LLM',
-      technologies: ['Python', 'LangChain', 'FastAPI', 'React', 'PostgreSQL', 'Docker'],
-      description: 'Engineered an asynchronous multi-agent orchestration engine that translates natural-language queries into parallelized DAGs, reducing overall task execution latency by 40%.',
-      highlights: [
-        'Engineered an asynchronous multi-agent orchestration engine that translates natural-language queries into parallelized DAGs, reducing overall task execution latency by 40%.',
-        'Designed an intelligent LLM routing dispatcher that enforces strict schema validation, guaranteeing deterministic, structured outputs and eliminating malformed API payloads.',
-        'Implemented a self-healing LLM invocation pipeline featuring cross-provider fallback routing and exponential backoff, achieving 100% system uptime against external API rate limits.',
-        'Parallelized sub-task execution using Python\'s asyncio, backed by a hybrid PostgreSQL state management system to persist complex, unpredictable LLM workflows.'
-      ],
-      keyInnovations: [
-        'Dynamic DAG Query-to-Workflow Compiler reducing latency by 40%',
-        'Zero-Malformed Output Schema Validation Dispatcher',
-        'Cross-Provider Self-Healing Fallback Pipeline with Exponential Backoff'
-      ],
-      architectureDiagram: `
-┌──────────────────┐      ┌─────────────────────────────┐      ┌───────────────────────────┐
-│ User Query (NL)  │ ───► │ Intent Router & Dispatcher  │ ───► │ Parallelized DAG Engine   │
-│                  │      │ (Strict Schema Validation)  │      │ (Python Asyncio Workers)  │
-└──────────────────┘      └──────────────┬──────────────┘      └─────────────┬─────────────┘
-                                         │                                   │
-                                         ▼                                   ▼
-                          ┌─────────────────────────────┐      ┌───────────────────────────┐
-                          │ Self-Healing LLM Pipeline   │      │ Hybrid PostgreSQL DB      │
-                          │ (Cross-Provider Fallbacks)  │      │ (Workflow State History)  │
-                          └─────────────────────────────┘      └───────────────────────────┘
-      `
-    },
-    {
-      id: 'slm-instruction-fine-tuning',
-      title: 'SLM Instruction Fine-Tuning',
-      category: 'Fine-Tuning & SLM',
-      technologies: ['Python', 'PyTorch', 'Unsloth', 'QLoRA', 'HuggingFace TRL', 'vLLM'],
-      description: 'Fine-tuned an open-weights Llama 3 (8B) model using Unsloth and QLoRA, optimizing the model to extract strictly typed JSON payloads from unstructured enterprise support tickets.',
-      highlights: [
-        'Fine-tuned an open-weights Llama 3 (8B) model using Unsloth and QLoRA, optimizing the model to extract strictly typed JSON payloads (issue severity, component, intent) from unstructured enterprise support tickets.',
-        'Curated a synthetic training dataset of 5,000+ support interactions and evaluated model performance based on JSON Schema Validation Pass Rate, achieving a 98% perfectly parsable output rate.',
-        'Implemented Parameter-Efficient Fine-Tuning (PEFT) to update <2% of total model parameters, drastically reducing VRAM requirements for training while preventing catastrophic forgetting.'
-      ],
-      keyInnovations: [
-        'Unsloth 2x Faster QLoRA Parameter-Efficient Tuning (<2% parameters)',
-        '98% JSON Schema Validation Pass Rate on Enterprise Tickets',
-        'High-Throughput Low-Latency Serving with vLLM'
-      ],
-      architectureDiagram: `
-┌──────────────────┐      ┌─────────────────────────────┐      ┌───────────────────────────┐
-│ 5,000+ Tickets   │ ───► │ QLoRA & Unsloth Pipeline    │ ───► │ Fine-Tuned Llama 3 (8B)   │
-│ (Unstructured)   │      │ (PEFT <2% Total Parameters) │      │ (Strict JSON Extraction)  │
-└──────────────────┘      └──────────────┬──────────────┘      └─────────────┬─────────────┘
-                                         │                                   │
-                                         ▼                                   ▼
-                          ┌─────────────────────────────┐      ┌───────────────────────────┐
-                          │ Synthetic Evaluation Suite  │      │ High-Throughput vLLM      │
-                          │ (98% Schema Pass Rate)      │      │ (Low-Latency Serving)     │
-                          └─────────────────────────────┘      └───────────────────────────┘
-      `
-    },
-    {
-      id: 'enterprise-rag-document-intelligence',
-      title: 'Enterprise RAG Document Intelligence Pipeline',
-      category: 'RAG & Vector Search',
-      technologies: ['Python', 'LangChain', 'FastAPI', 'Pinecone', 'Hybrid Search (BM25)'],
-      description: 'Engineered a scalable Retrieval-Augmented Generation (RAG) pipeline to ingest, chunk, and embed large-scale proprietary text datasets into a Pinecone vector database for low-latency retrieval.',
-      highlights: [
-        'Engineered a scalable Retrieval-Augmented Generation (RAG) pipeline to ingest, chunk, and embed large-scale proprietary text datasets into a Pinecone vector database for low-latency retrieval.',
-        'Implemented a hybrid search architecture fusing dense vector embeddings with sparse keyword search (BM25), improving context retrieval accuracy by 35%.',
-        'Designed asynchronous FastAPI endpoints to orchestrate contextual querying via LangChain, dynamically injecting retrieved vector chunks to reduce model hallucinations by over 85%.'
-      ],
-      keyInnovations: [
-        'Dense + Sparse Hybrid Search (Pinecone Vector DB + BM25)',
-        '>85% Hallucination Reduction via Dynamic Context Injection',
-        'Asynchronous FastAPI Ingestion and Retrieval Orchestration'
-      ],
-      architectureDiagram: `
-┌──────────────────┐      ┌─────────────────────────────┐      ┌───────────────────────────┐
-│ Enterprise Docs  │ ───► │ Chunking & Dense Embeddings │ ───► │ Pinecone Vector Database  │
-│ & Knowledge Base │      │ + Sparse Inverted Index     │      │ (Dense + BM25 Sparse)     │
-└──────────────────┘      └──────────────┬──────────────┘      └─────────────┬─────────────┘
-                                         │                                   │
-                                         ▼                                   ▼
-                          ┌─────────────────────────────┐      ┌───────────────────────────┐
-                          │ LangChain Async FastAPI     │ ───► │ Hallucination Guardrail   │
-                          │ (Contextual Prompt Inj.)    │      │ (>85% Hallucination Drop) │
-                          └─────────────────────────────┘      └───────────────────────────┘
-      `
-    }
-  ];
-
-  const projects = (projectsData && projectsData.length > 0) ? projectsData.map((p, index) => ({
-    ...defaultProjects[index],
-    ...p
-  })) : defaultProjects;
-
-  const filters = ['All', 'Multi-Agent & LLM', 'Fine-Tuning & SLM', 'RAG & Vector Search'];
-
-  const filteredProjects = activeFilter === 'All'
-    ? projects
-    : projects.filter(p => p.category === activeFilter || p.technologies.some(t => t.toLowerCase().includes(activeFilter.toLowerCase())));
-
-  const toggleDiagram = (id) => {
-    setOpenDiagramId(openDiagramId === id ? null : id);
+function ProjectCard({ project, index, onOpen, featured }) {
+  const visualRef = useRef(null);
+  const { motionEnabled } = useMotion();
+  const view = presentation[project.id];
+  const resetTilt = () => {
+    visualRef.current?.style.setProperty('--tilt-x', '0deg');
+    visualRef.current?.style.setProperty('--tilt-y', '0deg');
+  };
+  useEffect(() => { if (!motionEnabled) resetTilt(); }, [motionEnabled]);
+  const onPointerMove = event => {
+    if (!motionEnabled || event.pointerType !== 'mouse') return;
+    const bounds = event.currentTarget.getBoundingClientRect();
+    visualRef.current.style.setProperty('--tilt-x', `${-((event.clientY - bounds.top) / bounds.height - 0.5) * 5}deg`);
+    visualRef.current.style.setProperty('--tilt-y', `${((event.clientX - bounds.left) / bounds.width - 0.5) * 5}deg`);
   };
 
   return (
-    <section id="projects" className="py-20 relative bg-[#0b0f19]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <Reveal className={featured ? 'featured-project' : ''} delay={featured ? 0 : index * 70}>
+      <article className={`project-card ${featured ? 'project-featured' : ''}`} onPointerMove={onPointerMove} onPointerLeave={resetTilt}>
+        <div className="project-art-frame"><div className="project-art-depth" ref={visualRef}><ProjectVisual type={view?.type} /></div></div>
+        <div className="project-content">
+          <div className="project-category mono"><span>{project.category}</span><span>0{index + 1}</span></div>
+          <h3>{view?.title || project.title}</h3>
+          <p>{project.description}</p>
+          {view && <div className="project-metric"><strong>{view.metric}<span>{view.type === 'agents' ? '↘' : '↗'}</span></strong><span>{view.metricLabel}</span></div>}
+          <div className="project-stack">{project.technologies.slice(0, 4).map(tech => <span key={tech}>{tech}</span>)}</div>
+          <button
+            type="button"
+            className="project-open"
+            aria-label={`View details: ${project.title}`}
+            aria-haspopup="dialog"
+            aria-controls="project-details-dialog"
+            onClick={event => {
+              event.currentTarget.focus({ preventScroll: true });
+              onOpen(project);
+            }}
+          >
+            View details <Maximize size={15} aria-hidden="true" />
+          </button>
+        </div>
+      </article>
+    </Reveal>
+  );
+}
 
-        {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-12">
-          <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-md bg-[#111827] border border-[#1e293b] text-xs font-mono text-sky-400 mb-3">
-            <Terminal className="w-3.5 h-3.5" />
-            <span>Featured Engineering Work</span>
+export default function Projects({ projectsData = [], personalInfo }) {
+  const [activeFilter, setActiveFilter] = useState('All work');
+  const [selected, setSelected] = useState(null);
+  const dialogRef = useRef(null);
+  const filters = ['All work', ...new Set(projectsData.map(project => presentation[project.id]?.filter || project.category))];
+  const filtered = projectsData.filter(project => activeFilter === 'All work' || (presentation[project.id]?.filter || project.category) === activeFilter);
+
+  useEffect(() => {
+    if (!selected) return;
+    const dialog = dialogRef.current;
+    const opener = document.activeElement;
+    const previousOverflow = document.body.style.overflow;
+    dialog.showModal();
+    document.body.style.overflow = 'hidden';
+    return () => {
+      dialog.close();
+      document.body.style.overflow = previousOverflow;
+      opener?.focus({ preventScroll: true });
+    };
+  }, [selected]);
+
+  const selectedView = selected && presentation[selected.id];
+  return (
+    <section id="projects" className="section projects-section" aria-labelledby="projects-title">
+      <div className="container">
+        <Reveal className="section-heading">
+          <div><p className="eyebrow"><span className="section-number">01</span> SELECTED WORK</p><h2 id="projects-title">Complex problems.<br /><em>Considered solutions.</em></h2></div>
+          <p>A few things I've built to make AI more useful, more reliable, and ready for the real world.</p>
+        </Reveal>
+        <div className="project-toolbar">
+          <div className="filter-list" role="group" aria-label="Filter projects">
+            {filters.map(filter => <button key={filter} aria-pressed={filter === activeFilter} onClick={() => setActiveFilter(filter)}>{filter}{filter === 'All work' && <span>{String(projectsData.length).padStart(2, '0')}</span>}</button>)}
           </div>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight mb-4">
-            System Architecture & <span className="text-sky-400">Core Projects</span>
-          </h2>
-          <p className="text-slate-400 text-sm sm:text-base">
-            Deep dive into production-grade AI systems built for multi-agent DAG execution, parameter-efficient fine-tuning, and low-latency hybrid RAG retrieval.
-          </p>
+          <span className="mono results-count" role="status">{String(filtered.length).padStart(2, '0')} PROJECTS</span>
         </div>
-
-        {/* Filter Tabs */}
-        <div className="flex items-center justify-center space-x-2 mb-10 overflow-x-auto pb-2">
-          {filters.map((filter) => (
-            <button
-              key={filter}
-              onClick={() => setActiveFilter(filter)}
-              className={`px-4 py-2 rounded-md text-xs font-semibold whitespace-nowrap transition-colors ${
-                activeFilter === filter
-                  ? 'bg-sky-400 text-[#0b0f19] font-bold'
-                  : 'bg-[#111827] border border-[#1e293b] text-slate-300 hover:text-white hover:bg-[#1f2937]'
-              }`}
-            >
-              {filter}
-            </button>
-          ))}
+        <div className="projects-grid">
+          {filtered.map(project => <ProjectCard key={project.id} project={project} index={projectsData.indexOf(project)} featured={filtered.length === 1 || projectsData.indexOf(project) === 0} onOpen={setSelected} />)}
         </div>
-
-        {/* Projects Cards Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {filteredProjects.map((project) => {
-            const isDiagramOpen = openDiagramId === project.id;
-            return (
-              <div
-                key={project.id}
-                className="bg-[#111827] border border-[#1e293b] rounded-xl p-6 flex flex-col justify-between hover:border-[#374151] transition-all duration-200 shadow-sm group"
-              >
-                <div>
-                  {/* Top Badge */}
-                  <div className="flex items-center justify-between mb-4">
-                    <span className="px-2.5 py-1 rounded-md bg-[#1f2937] border border-[#374151] text-[11px] font-mono text-sky-400">
-                      {project.category || 'Core System'}
-                    </span>
-                    <span className="text-[11px] font-mono text-slate-400">
-                      {project.technologies[0]} / {project.technologies[1]}
-                    </span>
-                  </div>
-
-                  {/* Title & Description */}
-                  <h3 className="text-xl font-bold text-white mb-3 group-hover:text-sky-400 transition-colors leading-snug">
-                    {project.title}
-                  </h3>
-
-                  <p className="text-slate-300 text-xs sm:text-sm leading-relaxed mb-4">
-                    {project.description}
-                  </p>
-
-                  {/* Highlights Bullet List */}
-                  <div className="space-y-2 mb-5">
-                    <h4 className="text-[11px] font-mono text-slate-400 uppercase tracking-wider">Engineering Highlights:</h4>
-                    {project.highlights.map((h, i) => (
-                      <div key={i} className="flex items-start space-x-2 text-xs text-slate-300">
-                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0 mt-0.5" />
-                        <span>{h}</span>
-                      </div>
-                    ))}
-                  </div>
-
-                  {/* Key Innovations */}
-                  {project.keyInnovations && (
-                    <div className="p-3.5 rounded-lg bg-[#1f2937] border border-[#374151] mb-5">
-                      <div className="text-[11px] font-mono text-sky-400 flex items-center space-x-1.5 mb-1.5">
-                        <Zap className="w-3.5 h-3.5" />
-                        <span>Key Innovation Highlights</span>
-                      </div>
-                      <ul className="space-y-1">
-                        {project.keyInnovations.map((inv, idx) => (
-                          <li key={idx} className="text-[11px] text-slate-300 flex items-center space-x-1.5">
-                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
-                            <span>{inv}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-
-                  {/* Architecture Diagram Toggle */}
-                  <div className="mb-5">
-                    <button
-                      onClick={() => toggleDiagram(project.id)}
-                      className="w-full flex items-center justify-between px-3 py-2 rounded-md bg-[#1f2937] border border-[#374151] text-xs font-mono text-slate-300 hover:text-white hover:border-sky-400 transition-colors"
-                    >
-                      <span className="flex items-center space-x-2">
-                        <FileText className="w-3.5 h-3.5 text-sky-400" />
-                        <span>System Architecture Flow</span>
-                      </span>
-                      {isDiagramOpen ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
-                    </button>
-
-                    {isDiagramOpen && project.architectureDiagram && (
-                      <div className="mt-3 p-3 rounded-md bg-[#0b0f19] border border-[#1e293b] text-[10px] font-mono text-sky-400 overflow-x-auto">
-                        <pre className="whitespace-pre">{project.architectureDiagram.trim()}</pre>
-                      </div>
-                    )}
-                  </div>
-                </div>
-
-                {/* Tech Stack Badges */}
-                <div className="pt-4 border-t border-[#1e293b] flex flex-wrap gap-1.5">
-                  {project.technologies.map((t) => (
-                    <span
-                      key={t}
-                      className="px-2 py-0.5 rounded-md bg-[#1f2937] border border-[#374151] text-[10px] font-mono text-slate-300"
-                    >
-                      {t}
-                    </span>
-                  ))}
-                </div>
-
-              </div>
-            );
-          })}
-        </div>
-
+        <Reveal className="projects-footnote"><span>Built with curiosity. Grounded in engineering.</span><a className="text-link" href={personalInfo.github} target="_blank" rel="noopener noreferrer">More on GitHub <ArrowUpRight size={16} /></a></Reveal>
       </div>
+
+      <dialog id="project-details-dialog" ref={dialogRef} className="project-dialog" aria-labelledby="project-dialog-title" onCancel={() => setSelected(null)} onClick={event => {
+        if (event.target !== event.currentTarget) return;
+        const bounds = event.currentTarget.getBoundingClientRect();
+        if (event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom) setSelected(null);
+      }}>
+        {selected && <>
+          <div className="dialog-top"><span className="eyebrow">PROJECT NOTES / {selected.category}</span><button autoFocus className="icon-button" aria-label="Close project details" onClick={() => setSelected(null)}><X size={21} /></button></div>
+          <div className="dialog-content">
+            <h2 id="project-dialog-title">{selected.title}</h2>
+            <p className="dialog-description">{selected.description}</p>
+            <div className="tag-list">{selected.technologies.map(tech => <span key={tech}>{tech}</span>)}</div>
+            <ProjectVisual type={selectedView?.type} />
+            <h3>Inside the system</h3>
+            {selectedView && <ol className="architecture-flow">{selectedView.flow.map((step, index) => <li key={step}><span className="mono">0{index + 1}</span>{step}{index < selectedView.flow.length - 1 && <ArrowRight size={15} aria-hidden="true" />}</li>)}</ol>}
+            <h3>Engineering highlights</h3>
+            <ul className="detail-list">{selected.highlights.map(highlight => <li key={highlight}>{highlight}</li>)}</ul>
+            <h3>Key ideas</h3>
+            <ul className="innovation-list">{selected.keyInnovations.map(innovation => <li key={innovation}>{innovation}</li>)}</ul>
+            <ArchitectureDiagram key={selected.id} architecture={selected.architecture} projectTitle={selected.title} />
+            <a className="button button-secondary" href="#contact" onClick={() => setSelected(null)}>Discuss this project <ArrowUpRight size={16} /></a>
+          </div>
+        </>}
+      </dialog>
     </section>
   );
 }
