@@ -14,6 +14,16 @@ This file documents the manual GitHub workflow for the consent-gated GA4 update.
 3. Confirm the working tree contains the analytics update and that the local main branch is based on the current live source.
 4. Do not share a password, access token, recovery code, or private key in chat.
 
+## Recommended GA4 account settings
+
+Before deploying, open the GA4 property settings and use these values:
+
+1. **Google Signals:** leave disabled.
+2. **Advertising features/personalization:** leave disabled and do not link Google Ads.
+3. **Enhanced measurement:** turn it off for this portfolio. This site already sends a small, explicit event allowlist. Disabling enhanced measurement avoids automatic outbound-link and file-download events that could expose a `mailto:` URL or create duplicate résumé events. Standard page-view collection is configured by the site after consent.
+4. **Data sharing settings:** use the most restrictive choices you prefer; turning off optional sharing keeps collected Analytics data limited to providing and maintaining the service.
+5. **Data retention:** 14 months is a reasonable maximum for this portfolio; 2 months is also available.
+
 ## Preserve the analytics-free versions
 
 These references are already prepared locally:
