@@ -1,11 +1,15 @@
 import React from 'react';
 import { ArrowRight, ChevronDown, GitBranch, Workflow } from 'lucide-react';
+import { useAnalytics } from './AnalyticsConsent';
 
 export default function ArchitectureDiagram({ architecture, projectTitle }) {
   if (!architecture?.steps?.length) return null;
+  const { trackEvent } = useAnalytics();
 
   return (
-    <details className="technical-diagram">
+    <details className="technical-diagram" onToggle={event => {
+      if (event.currentTarget.open) trackEvent('architecture_expand', { project_id: projectTitle === 'Enterprise Multi-Agent AI Orchestration Platform' ? 'enterprise-multi-agent-platform' : projectTitle === 'SLM Instruction Fine-Tuning' ? 'slm-instruction-fine-tuning' : 'enterprise-rag-document-intelligence' });
+    }}>
       <summary>
         <span className="architecture-summary-label">
           <Workflow size={18} aria-hidden="true" />

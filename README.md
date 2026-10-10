@@ -59,6 +59,8 @@ The portfolio pairs warm charcoal, ivory, and bronze with editorial typography a
 - **Project Case Studies:** Original isometric SVG artwork, category filters, and keyboard-accessible native dialogs with engineering highlights and architecture details.
 - **Responsive Architecture Diagrams:** Expandable processing flows and supporting-system cards, sourced from each project's `architecture` data. Steps stack vertically on phones without shrinking text or requiring sideways scrolling.
 - **Data-Driven Expertise:** Searchable skill categories sourced directly from the portfolio dataset, with expandable professional experience.
+- **Consent-Gated Analytics:** Optional GA4 loads only after a visitor explicitly chooses “Allow analytics.” Before consent, the site makes no Google Analytics requests. The event schema accepts only predefined project, section, résumé, contact-link, architecture, and successful-contact values; form names, emails, phone numbers, and messages are never sent to analytics.
+- **Privacy Controls:** A small bottom preference control, footer “Analytics preferences” action, and `public/privacy.html` explain and manage the optional analytics choice. Preferences expire after 180 days; turning analytics off clears this portfolio's GA cookies and refreshes the page.
 - **Serverless Contact Form:** Fully functional contact form integrated directly with [Formspree](https://formspree.io/) featuring client-side schema validation, asynchronous JSON dispatch, and error handling.
 - **Native Static Data:** Resume data and project inventories are bundled locally for instant load times and complete decoupling from external database APIs.
 - **Responsive Layout:** Optimized across mobile, tablet, and widescreen desktop displays.
@@ -117,6 +119,8 @@ npm test
 
 On Linux, Playwright may also require `npx playwright install-deps chromium`. The browser suite starts its own Vite server on port 3100. Contact requests are intercepted; tests do not send real messages.
 
+The browser suite also confirms that analytics is blocked before consent and that only allowlisted events are available after opt-in.
+
 ---
 
 ## Deployment
@@ -133,6 +137,8 @@ The versions preceding the 3D redesign are preserved in these branches:
 
 - [`backup/previous-portfolio`](https://github.com/ProdduturiSharath/portfolio/tree/backup/previous-portfolio): previous source code.
 - [`backup/previous-deployment`](https://github.com/ProdduturiSharath/portfolio/tree/backup/previous-deployment): previous deployed build.
+
+Before analytics was added, the source was preserved locally at commit `02d6f35` as `backup/pre-analytics`, and the analytics-free deployed build is preserved at commit `1136fc0` as `backup/pre-analytics-deployment`. These branches should be pushed before publishing the analytics update.
 
 ---
 

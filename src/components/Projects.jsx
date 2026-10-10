@@ -3,6 +3,7 @@ import { ArrowRight, ArrowUpRight, Maximize, X } from 'lucide-react';
 import ProjectVisual from './ProjectVisual';
 import ArchitectureDiagram from './ArchitectureDiagram';
 import { Reveal, useMotion } from './Motion';
+import { useAnalytics } from './AnalyticsConsent';
 
 const presentation = {
   'enterprise-multi-agent-platform': { type: 'agents', title: 'Multi-agent orchestration', metric: '40%', metricLabel: 'lower execution latency', filter: 'Multi-agent', flow: ['Natural-language query', 'Validated intent routing', 'Parallel agent execution', 'Persistent workflow state'] },
@@ -13,6 +14,7 @@ const presentation = {
 function ProjectCard({ project, index, onOpen, featured }) {
   const visualRef = useRef(null);
   const { motionEnabled } = useMotion();
+  const { trackEvent } = useAnalytics();
   const view = presentation[project.id];
   const resetTilt = () => {
     visualRef.current?.style.setProperty('--tilt-x', '0deg');
@@ -44,6 +46,7 @@ function ProjectCard({ project, index, onOpen, featured }) {
             aria-controls="project-details-dialog"
             onClick={event => {
               event.currentTarget.focus({ preventScroll: true });
+              trackEvent('project_open', { project_id: project.id });
               onOpen(project);
             }}
           >

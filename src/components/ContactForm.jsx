@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { ArrowUpRight, Check, Copy, Github, Linkedin, Loader2, Send } from 'lucide-react';
 import { submitContactForm } from '../services/api';
 import { Reveal } from './Motion';
+import { useAnalytics } from './AnalyticsConsent';
 
 const emptyForm = { name: '', email: '', message: '' };
 const validate = (name, value) => {
@@ -19,6 +20,7 @@ export default function ContactForm({ personalInfo }) {
   const copyTimer = useRef(null);
   const formRef = useRef(null);
   const inFlight = useRef(false);
+  const { trackEvent } = useAnalytics();
 
   useEffect(() => () => clearTimeout(copyTimer.current), []);
 
@@ -46,6 +48,7 @@ export default function ContactForm({ personalInfo }) {
       const result = await submitContactForm(Object.fromEntries(Object.entries(formData).map(([name, value]) => [name, value.trim()])));
       setFeedback({ type: result.success ? 'success' : 'error', message: result.success ? "Message sent. Thank you for reaching out — let's build something meaningful." : result.message || 'Something went wrong. Please try again or email me directly.' });
       if (result.success) {
+        trackEvent('contact_submit_success');
         setFormData(emptyForm);
         setErrors({});
       }
@@ -75,10 +78,10 @@ export default function ContactForm({ personalInfo }) {
           <p className="eyebrow"><span className="section-number">04</span> START A CONVERSATION</p>
           <h2 id="contact-title">The next great<br />thing starts with<br /><em>a conversation.</em></h2>
           <p>Have an AI engineering opportunity, a challenging idea, or a shared curiosity? I'd love to hear about it.</p>
-          <div className="contact-email-row"><a className="contact-email" href={`mailto:${personalInfo.email}`}>{personalInfo.email}<ArrowUpRight size={17} /></a><button className="icon-button" aria-label="Copy email address" onClick={copyEmail}>{copyStatus === 'Email copied' ? <Check size={16} /> : <Copy size={16} />}</button></div>
+          <div className="contact-email-row"><a className="contact-email" href={`mailto:${personalInfo.email}`} onClick={() => trackEvent('contact_link_click', { link_type: 'email' })}>{personalInfo.email}<ArrowUpRight size={17} /></a><button className="icon-button" aria-label="Copy email address" onClick={copyEmail}>{copyStatus === 'Email copied' ? <Check size={16} /> : <Copy size={16} />}</button></div>
           <span className="copy-status" role="status">{copyStatus}</span>
-          <div className="contact-socials"><a href={personalInfo.github} target="_blank" rel="noopener noreferrer"><Github size={16} /> GitHub <ArrowUpRight size={13} /></a><a href={personalInfo.linkedin} target="_blank" rel="noopener noreferrer"><Linkedin size={16} /> LinkedIn <ArrowUpRight size={13} /></a></div>
-          <div className="contact-location"><span className="status-dot" /><span>{personalInfo.location}</span><a href={`tel:${personalInfo.phone.replace(/\s/g, '')}`}>{personalInfo.phone}</a></div>
+          <div className="contact-socials"><a href={personalInfo.github} target="_blank" rel="noopener noreferrer" onClick={() => trackEvent('contact_link_click', { link_type: 'github' })}><Github size={16} /> GitHub <ArrowUpRight size={13} /></a><a href={personalInfo.linkedin} target="_blank" rel="noopener noreferrer" onClick={() => trackEvent('contact_link_click', { link_type: 'linkedin' })}><Linkedin size={16} /> LinkedIn <ArrowUpRight size={13} /></a></div>
+          <div className="contact-location"><span className="status-dot" /><span>{personalInfo.location}</span><a href={`tel:${personalInfo.phone.replace(/\s/g, '')}`} onClick={() => trackEvent('contact_link_click', { link_type: 'phone' })}>{personalInfo.phone}</a></div>
         </Reveal>
         <Reveal className="contact-form-wrap" delay={100}>
           <div className="form-heading"><span className="mono">A NOTE, NOT A FORMALITY.</span><ArrowUpRight size={22} /></div>

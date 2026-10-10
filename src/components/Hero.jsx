@@ -2,9 +2,11 @@ import React from 'react';
 import { ArrowDown, ArrowUpRight, Github, Linkedin, MapPin, Pause, Play } from 'lucide-react';
 import NeuralSculpture from './NeuralSculpture';
 import { useMotion } from './Motion';
+import { useAnalytics } from './AnalyticsConsent';
 
 export default function Hero({ personalInfo }) {
   const { motionEnabled, reducedMotion, toggleMotion } = useMotion();
+  const { trackEvent } = useAnalytics();
 
   return (
     <section id="hero" className="hero-section" aria-labelledby="hero-title">
@@ -17,7 +19,7 @@ export default function Hero({ personalInfo }) {
             <p className="hero-description">I turn the possibilities of AI into reliable, real-world systems. Working at the intersection of generative AI, thoughtful architecture, and human impact.</p>
             <div className="hero-actions">
               <a className="button button-primary" href="#projects">Explore my work <ArrowUpRight size={18} /></a>
-              <a className="text-link" href={`${import.meta.env.BASE_URL}Sharath_Chandra_AI_Engineer_Resume.pdf`} target="_blank" rel="noopener noreferrer">View résumé <ArrowUpRight size={16} /></a>
+              <a className="text-link" href={`${import.meta.env.BASE_URL}Sharath_Chandra_AI_Engineer_Resume.pdf`} target="_blank" rel="noopener noreferrer" onClick={() => trackEvent('resume_click', { button_location: 'hero' })}>View résumé <ArrowUpRight size={16} /></a>
             </div>
             <div className="hero-meta">
               <span><MapPin size={13} /> {personalInfo.location}</span>

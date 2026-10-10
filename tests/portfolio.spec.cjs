@@ -5,12 +5,52 @@ test.beforeEach(async ({ page }) => {
   const runtimeErrors = [];
   page.on('pageerror', error => runtimeErrors.push(error.message));
   page.runtimeErrors = runtimeErrors;
+  await page.addInitScript(() => localStorage.clear());
   await page.goto('./');
   await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
 });
 
 test.afterEach(async ({ page }) => {
   expect(page.runtimeErrors).toEqual([]);
+});
+
+test('analytics is blocked before consent, then records allowlisted events after opt-in', async ({ page }) => {
+  let analyticsRequests = 0;
+  await page.route('https://www.googletagmanager.com/gtag/js?id=G-WY6C2R6LT7', async route => {
+    analyticsRequests += 1;
+    await route.fulfill({ contentType: 'application/javascript', body: 'window.__testGoogleTagLoaded = true;' });
+  });
+
+  const notice = page.getByRole('region', { name: 'Optional analytics' });
+  await expect(notice).toBeVisible();
+  await expect(page.locator('#portfolio-google-analytics')).toHaveCount(0);
+  await expect.poll(() => analyticsRequests).toBe(0);
+  await page.getByRole('button', { name: 'Not now' }).click();
+  await expect(notice).toBeHidden();
+  expect(await page.evaluate(() => localStorage.getItem('portfolio.analytics.consent.v1'))).toContain('declined');
+  await expect(page.locator('#portfolio-google-analytics')).toHaveCount(0);
+
+  await page.getByRole('button', { name: 'Analytics preferences' }).click();
+  await page.getByRole('button', { name: 'Allow analytics' }).click();
+  await expect(page.locator('#portfolio-google-analytics')).toHaveCount(1);
+  await expect.poll(() => analyticsRequests).toBe(1);
+  expect(await page.evaluate(() => localStorage.getItem('portfolio.analytics.consent.v1'))).toContain('accepted');
+
+  await page.getByRole('button', { name: /View details: Enterprise Multi-Agent/ }).click();
+  await page.locator('.technical-diagram summary').click();
+  const eventNames = await page.evaluate(() => (window.dataLayer || []).map(item => Array.from(item)[0]).filter(Boolean));
+  expect(eventNames).toContain('config');
+  expect(eventNames).toContain('event');
+  const dataLayerText = await page.evaluate(() => JSON.stringify(window.dataLayer || []));
+  expect(dataLayerText).not.toContain('visitor@example.com');
+});
+
+test('privacy details are available without enabling analytics', async ({ page }) => {
+  const privacy = page.getByRole('link', { name: /Privacy details/ });
+  const response = await page.request.get(new URL(await privacy.getAttribute('href'), page.url()).href);
+  expect(response.ok()).toBe(true);
+  expect(await response.text()).toContain('Privacy & analytics');
+  await expect(page.locator('#portfolio-google-analytics')).toHaveCount(0);
 });
 
 test('responsive content, navigation, résumé, and skip link', async ({ page }) => {

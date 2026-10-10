@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { ArrowUpRight, FileText, Menu, X } from 'lucide-react';
+import { useAnalytics } from './AnalyticsConsent';
 
 const links = [
   { name: 'Selected work', href: '#projects' },
@@ -11,6 +12,7 @@ export default function Navbar({ activeSection }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const menuButton = useRef(null);
   const headerRef = useRef(null);
+  const { trackEvent } = useAnalytics();
 
   useEffect(() => {
     if (!mobileMenuOpen) return;
@@ -55,6 +57,7 @@ export default function Navbar({ activeSection }) {
             rel="noopener noreferrer"
             title="View résumé (PDF, opens in a new tab)"
             onClick={() => setMobileMenuOpen(false)}
+            onClickCapture={() => trackEvent('resume_click', { button_location: 'header' })}
           >
             <FileText size={16} aria-hidden="true" />
             <span>View résumé</span>

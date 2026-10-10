@@ -14,7 +14,7 @@ module.exports = defineConfig({
     screenshot: 'only-on-failure',
   },
   webServer: {
-    command: 'npm run dev -- --host 127.0.0.1 --port 3100 --strictPort',
+    command: 'npm run dev -- --mode analytics-test --host 127.0.0.1 --port 3100 --strictPort',
     cwd: __dirname,
     url: 'http://127.0.0.1:3100/portfolio/',
     reuseExistingServer: !process.env.CI,
